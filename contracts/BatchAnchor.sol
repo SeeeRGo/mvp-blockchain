@@ -110,7 +110,7 @@ contract BatchAnchor {
         bytes32 _batchId,
         bytes32 _diplomaHash,
         bytes32[] calldata _merkleProof
-    ) external pure returns (bool) {
+    ) external view returns (bool) {
         bytes32 computedHash = _diplomaHash;
         
         for (uint256 i = 0; i < _merkleProof.length; i++) {
