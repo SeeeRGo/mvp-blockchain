@@ -9,7 +9,7 @@ async function main() {
 
   // Deploy PublisherRegistry
   console.log("\nDeploying PublisherRegistry...");
-  const PublisherRegistry = await hre.ethers.getContractFactory("PublisherRegistry");
+  const PublisherRegistry = await hre.ethers.getContractFactory("contracts/PublisherRegistry.sol:PublisherRegistry");
   const publisherRegistry = await PublisherRegistry.deploy();
   await publisherRegistry.waitForDeployment();
   const publisherRegistryAddress = await publisherRegistry.getAddress();
