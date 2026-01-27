@@ -167,6 +167,55 @@ npx convex init
 npx convex deploy
 ```
 
+### Environment Variables Setup
+
+**Important**: Convex server functions require environment variables to be set in the Convex deployment environment, not just in `.env.local`.
+
+#### Quick Setup
+
+Run the automated setup script:
+
+```bash
+npm run setup:convex
+```
+
+Or manually set the required variables:
+
+```bash
+# Set PRIVATE_KEY
+npx convex env set PRIVATE_KEY "your_private_key_here"
+
+# Set ARBITRUM_SEPOLIA_RPC_URL
+npx convex env set ARBITRUM_SEPOLIA_RPC_URL "https://sepolia-rollup.arbitrum.io/rpc"
+
+# Set ARBISCAN_API_KEY (optional)
+npx convex env set ARBISCAN_API_KEY "your_arbiscan_api_key"
+```
+
+#### Troubleshooting Environment Variables
+
+If you encounter the error `Missing ARBITRUM_SEPOLIA_RPC_URL or PRIVATE_KEY environment variables`:
+
+1. **Verify variables are set in Convex**:
+   ```bash
+   npx convex env list
+   ```
+
+2. **Set missing variables** using the commands above
+
+3. **Restart Convex dev server**:
+   ```bash
+   # Stop the current server (Ctrl+C)
+   npx convex dev
+   ```
+
+4. **Check Convex dashboard**:
+   - Go to https://dashboard.convex.dev
+   - Navigate to Settings → Environment Variables
+   - Verify all required variables are present
+
+For detailed troubleshooting, see [`ENV_FIX_GUIDE.md`](ENV_FIX_GUIDE.md).
+
 ### Smart Contract Deployment
 
 ```bash

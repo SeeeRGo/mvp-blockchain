@@ -8,10 +8,8 @@ export default function VerifierPortal() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [showCreateRequest, setShowCreateRequest] = useState(false);
 
-  // Query verification requests (disabled for demo)
-  // const requests = useQuery(api.verifiers.listVerificationRequests, { verifierId: "placeholder" as any });
-
-  const requests: any[] = [];
+  // Query verification requests with diploma and batch information
+  const requests = useQuery(api.verifiers.listVerificationRequestsWithDiploma, {});
 
   // Mutation
   const createRequest = useMutation(api.verifiers.createVerificationRequest);
@@ -253,10 +251,18 @@ function RequestList({ requests, onCreateRequest }: any) {
                     <button className="text-purple-600 hover:text-purple-900 mr-3">
                       View
                     </button>
-                    {request.status === "approved" && (
-                      <button className="text-green-600 hover:text-green-900">
-                        View on Blockchain
-                      </button>
+                    {request.diploma?.status === "anchored" && request.batch?.txHash && (
+                      <a
+                        href={`https://sepolia.arbiscan.io/tx/${request.batch.txHash}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-green-600 hover:text-green-900 flex items-center"
+                      >
+                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                        View on Arbiscan
+                      </a>
                     )}
                   </td>
                 </tr>
@@ -339,7 +345,7 @@ function CreateRequestModal({ onClose, onSubmit }: any) {
         <form onSubmit={handleSubmit} className="px-6 py-4 space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Diploma Hash
+              Diploma ID or Hash
             </label>
             <input
               type="text"
@@ -347,8 +353,11 @@ function CreateRequestModal({ onClose, onSubmit }: any) {
               value={formData.diplomaHash}
               onChange={(e) => setFormData({ ...formData, diplomaHash: e.target.value })}
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
-              placeholder="Enter the diploma hash"
+              placeholder="Enter the diploma ID or hash (both work)"
             />
+            <p className="mt-1 text-xs text-gray-500">
+              You can use either the Diploma ID shown after upload or the Diploma Hash
+            </p>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">

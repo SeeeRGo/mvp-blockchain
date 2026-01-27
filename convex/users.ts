@@ -64,3 +64,11 @@ export const updateDeviceToken = mutation({
     return { success: true };
   },
 });
+
+// List all users
+export const list = query({
+  args: {},
+  handler: async (ctx) => {
+    return await ctx.db.query("users").collect();
+  },
+});

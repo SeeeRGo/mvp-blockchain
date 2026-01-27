@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "setup:convex": "node scripts/setup-convex-env.js"
   },
   "dependencies": {
     "convex": "^1.31.6",
@@ -27,6 +28,7 @@
     "@typechain/ethers-v6": "^0.5.0",
     "@typechain/hardhat": "^9.0.0",
     "@types/chai": "^4.2.0",
+    "@types/minimatch": "^5.1.2",
     "@types/mocha": ">=9.1.0",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -35,7 +37,7 @@
     "dotenv": "^17.2.3",
     "eslint": "^9",
     "eslint-config-next": "16.1.5",
-    "ethers": "^6.4.0",
+    "ethers": "^6.16.0",
     "hardhat": "^2.22.0",
     "hardhat-gas-reporter": "^1.0.8",
     "solidity-coverage": "^0.8.1",

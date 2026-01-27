@@ -3,22 +3,57 @@ import { v } from "convex/values";
 
 export const createVerificationRequest = mutation({
   args: {
-    verifierId: v.id("verifiers"),
+    verifierId: v.optional(v.id("verifiers")),
     diplomaHash: v.string(),
     requestedFields: v.array(v.string()),
     ttlSeconds: v.number(),
   },
   handler: async (ctx, args) => {
-    // Find diploma by hash
-    const diploma = await ctx.db
+    // Find diploma by hash or ID
+    let diploma = await ctx.db
       .query("diplomas")
       .withIndex("by_hash", (q) => q.eq("diplomaHash", args.diplomaHash))
       .first();
     
-    if (!diploma) throw new Error("Diploma not found");
+    // If not found by hash, try to find by ID
+    if (!diploma) {
+      try {
+        const result = await ctx.db.get(args.diplomaHash as any);
+        // Check if the result is actually a diploma (has diplomaHash property)
+        if (result && "diplomaHash" in result) {
+          diploma = result as any;
+        }
+      } catch (e) {
+        // Invalid ID format, continue to error
+      }
+    }
+    
+    if (!diploma) throw new Error("Diploma not found. Please check the Diploma ID or hash and try again.");
+    
+    // If no verifierId provided, create a default verifier
+    let verifierId = args.verifierId;
+    if (!verifierId) {
+      // Check if a default verifier exists
+      const defaultVerifier = await ctx.db
+        .query("verifiers")
+        .withIndex("by_email", (q) => q.eq("email", "default@verifier.com"))
+        .first();
+      
+      if (defaultVerifier) {
+        verifierId = defaultVerifier._id;
+      } else {
+        // Create default verifier
+        verifierId = await ctx.db.insert("verifiers", {
+          name: "Default Verifier",
+          email: "default@verifier.com",
+          organization: "Default Organization",
+          createdAt: Date.now(),
+        });
+      }
+    }
     
     const requestId = await ctx.db.insert("verificationRequests", {
-      verifierId: args.verifierId,
+      verifierId,
       diplomaId: diploma._id,
       requestedFields: args.requestedFields,
       ttlSeconds: args.ttlSeconds,
@@ -76,13 +111,73 @@ export const getOnChainProof = query({
 });
 
 export const listVerificationRequests = query({
-  args: { verifierId: v.id("verifiers") },
+  args: { verifierId: v.optional(v.id("verifiers")) },
   handler: async (ctx, args) => {
+    // If no verifierId provided, get default verifier
+    let verifierId = args.verifierId;
+    if (!verifierId) {
+      const defaultVerifier = await ctx.db
+        .query("verifiers")
+        .withIndex("by_email", (q) => q.eq("email", "default@verifier.com"))
+        .first();
+      
+      if (defaultVerifier) {
+        verifierId = defaultVerifier._id;
+      } else {
+        // Return empty array if no default verifier exists
+        return [];
+      }
+    }
+    
     const requests = await ctx.db
       .query("verificationRequests")
-      .withIndex("by_verifier", (q) => q.eq("verifierId", args.verifierId))
+      .withIndex("by_verifier", (q) => q.eq("verifierId", verifierId))
       .collect();
     return requests;
+  },
+});
+
+export const listVerificationRequestsWithDiploma = query({
+  args: { verifierId: v.optional(v.id("verifiers")) },
+  handler: async (ctx, args) => {
+    // If no verifierId provided, get default verifier
+    let verifierId = args.verifierId;
+    if (!verifierId) {
+      const defaultVerifier = await ctx.db
+        .query("verifiers")
+        .withIndex("by_email", (q) => q.eq("email", "default@verifier.com"))
+        .first();
+      
+      if (defaultVerifier) {
+        verifierId = defaultVerifier._id;
+      } else {
+        // Return empty array if no default verifier exists
+        return [];
+      }
+    }
+    
+    const requests = await ctx.db
+      .query("verificationRequests")
+      .withIndex("by_verifier", (q) => q.eq("verifierId", verifierId))
+      .collect();
+    
+    // Fetch diploma and batch information for each request
+    const requestWithDiploma = await Promise.all(
+      requests.map(async (request) => {
+        const diploma = await ctx.db.get(request.diplomaId);
+        let batch = null;
+        if (diploma?.batchId) {
+          batch = await ctx.db.get(diploma.batchId);
+        }
+        return {
+          ...request,
+          diploma,
+          batch,
+        };
+      })
+    );
+    
+    return requestWithDiploma;
   },
 });
 

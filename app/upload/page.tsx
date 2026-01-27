@@ -20,12 +20,16 @@ export default function UploadDiploma() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
   const [createdDiploma, setCreatedDiploma] = useState<any>(null);
+  const [diplomaHash, setDiplomaHash] = useState<string>("");
 
   // Query to get university by name
   const university = useQuery(api.universities.getByName, { name: "Demo University" });
   
   // Mutation to create diploma
   const createDiploma = useMutation(api.universities.createDiploma);
+  
+  // Query to get diploma by ID (to retrieve hash after creation)
+  const diploma = useQuery(api.diplomas.getDiplomaById, { diplomaId: createdDiploma });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -100,6 +104,12 @@ export default function UploadDiploma() {
                   <span className="text-gray-600">Diploma ID:</span>
                   <span className="font-medium text-sm text-blue-600">{createdDiploma}</span>
                 </div>
+                {diploma && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Diploma Hash:</span>
+                    <span className="font-medium text-sm text-blue-600">{diploma.diplomaHash}</span>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -110,10 +120,12 @@ export default function UploadDiploma() {
               </p>
               <ul className="text-sm text-blue-800 list-disc list-inside space-y-1">
                 <li><strong>Diploma ID:</strong> {createdDiploma}</li>
-                <li><strong>Diploma Hash:</strong> (Use the hash from the diploma details)</li>
+                {diploma && (
+                  <li><strong>Diploma Hash:</strong> {diploma.diplomaHash}</li>
+                )}
               </ul>
               <p className="text-sm text-blue-800 mt-2">
-                Copy the Diploma ID above and paste it in the verification page to find your diploma.
+                Copy either the Diploma ID or Hash above and paste it in the verification page to find your diploma.
               </p>
             </div>
 

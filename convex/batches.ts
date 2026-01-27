@@ -49,3 +49,31 @@ export const listBatches = query({
     return batches;
   },
 });
+
+export const listBatchesWithDetails = query({
+  args: { universityId: v.id("universities") },
+  handler: async (ctx, args) => {
+    const batches = await ctx.db
+      .query("batches")
+      .withIndex("by_university", (q) => q.eq("universityId", args.universityId))
+      .collect();
+    
+    // Get batch items count for each batch
+    const batchesWithDetails = await Promise.all(
+      batches.map(async (batch) => {
+        const batchItems = await ctx.db
+          .query("batchItems")
+          .withIndex("by_batch", (q) => q.eq("batchId", batch._id))
+          .collect();
+        
+        return {
+          ...batch,
+          itemCount: batchItems.length,
+        };
+      })
+    );
+    
+    // Sort by creation date, newest first
+    return batchesWithDetails.sort((a, b) => b.createdAt - a.createdAt);
+  },
+});

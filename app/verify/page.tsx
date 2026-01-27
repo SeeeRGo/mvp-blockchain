@@ -10,11 +10,18 @@ export default function VerifyDiploma() {
   const [isSearching, setIsSearching] = useState(false);
   const [searchResult, setSearchResult] = useState<any>(null);
   const [error, setError] = useState("");
+  const [copiedHash, setCopiedHash] = useState<string | null>(null);
 
   // Query to search diploma by hash or ID
   const diploma = useQuery(api.diplomas.searchDiploma, {
     searchTerm: searchQuery,
   });
+
+  // Query to get diploma with batch info (when we have a result)
+  const diplomaWithBatch = useQuery(
+    api.diplomas.getDiplomaWithBatch,
+    searchResult ? { diplomaId: searchResult._id as any } : "skip"
+  );
 
   // Action to verify diploma on chain
   const verifyOnChain = useAction(api.blockchain.verifyDiplomaOnChain);
@@ -63,6 +70,16 @@ export default function VerifyDiploma() {
     } catch (err) {
       setError("Failed to verify diploma on blockchain. Please try again.");
       console.error(err);
+    }
+  };
+
+  const handleCopyHash = async (hash: string) => {
+    try {
+      await navigator.clipboard.writeText(hash);
+      setCopiedHash(hash);
+      setTimeout(() => setCopiedHash(null), 2000);
+    } catch (err) {
+      console.error("Failed to copy hash:", err);
     }
   };
 
@@ -170,6 +187,47 @@ export default function VerifyDiploma() {
                   <span className="text-sm text-gray-600">Status:</span>
                   <StatusBadge status={searchResult.status} />
                 </div>
+                {diplomaWithBatch?.batch?.txHash && (
+                  <div className="flex flex-col gap-2">
+                    <div className="flex justify-between items-start">
+                      <span className="text-sm text-gray-600">Transaction Hash:</span>
+                      <div className="flex items-center gap-2 flex-1 justify-end">
+                        <code className="text-sm bg-white px-3 py-1 rounded border break-all max-w-xs">
+                          {diplomaWithBatch.batch.txHash}
+                        </code>
+                        <button
+                          onClick={() => diplomaWithBatch.batch?.txHash && handleCopyHash(diplomaWithBatch.batch.txHash)}
+                          className="text-sm bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded border flex items-center"
+                          title="Copy transaction hash"
+                        >
+                          {copiedHash === diplomaWithBatch.batch?.txHash ? (
+                            <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                          ) : (
+                            <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                          )}
+                        </button>
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-gray-600">View on Arbiscan:</span>
+                      <a
+                        href={`https://sepolia.arbiscan.io/tx/${diplomaWithBatch.batch.txHash}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm bg-green-50 px-3 py-1 rounded border border-green-200 text-green-700 hover:text-green-900 hover:bg-green-100 flex items-center"
+                      >
+                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                        Open in New Tab
+                      </a>
+                    </div>
+                  </div>
+                )}
                 {searchResult.batchId && (
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-600">Batch ID:</span>

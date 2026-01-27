@@ -31,6 +31,32 @@ export const listDiplomas = query({
   },
 });
 
+export const listDiplomasWithBatchInfo = query({
+  args: { universityId: v.id("universities") },
+  handler: async (ctx, args) => {
+    const diplomas = await ctx.db
+      .query("diplomas")
+      .withIndex("by_university", (q) => q.eq("universityId", args.universityId))
+      .collect();
+    
+    // Fetch batch information for each diploma
+    const diplomasWithBatch = await Promise.all(
+      diplomas.map(async (diploma) => {
+        let batch = null;
+        if (diploma.batchId) {
+          batch = await ctx.db.get(diploma.batchId);
+        }
+        return {
+          ...diploma,
+          batch,
+        };
+      })
+    );
+    
+    return diplomasWithBatch;
+  },
+});
+
 export const getDiploma = query({
   args: { diplomaId: v.id("diplomas") },
   handler: async (ctx, args) => {
@@ -116,16 +142,26 @@ export const register = mutation({
 
 export const attestPublisher = mutation({
   args: {
-    universityId: v.id("universities"),
+    universityName: v.string(),
     publisherKey: v.string(),
   },
   handler: async (ctx, args) => {
-    await ctx.db.patch(args.universityId, {
+    // Look up university by name
+    const university = await ctx.db
+      .query("universities")
+      .withIndex("by_name", (q) => q.eq("name", args.universityName))
+      .first();
+
+    if (!university) {
+      throw new Error(`University "${args.universityName}" not found`);
+    }
+
+    await ctx.db.patch(university._id, {
       publisherKey: args.publisherKey,
       updatedAt: Date.now(),
     });
     // Trigger blockchain attestation via action
-    return { success: true };
+    return { success: true, universityId: university._id };
   },
 });
 

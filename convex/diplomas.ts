@@ -75,3 +75,47 @@ export const searchDiploma = query({
     return null;
   },
 });
+
+export const listWithBatchInfo = query({
+  args: { userId: v.id("users") },
+  handler: async (ctx, args) => {
+    const diplomas = await ctx.db
+      .query("diplomas")
+      .withIndex("by_owner", (q) => q.eq("ownerId", args.userId))
+      .collect();
+    
+    // Fetch batch information for each diploma
+    const diplomasWithBatch = await Promise.all(
+      diplomas.map(async (diploma) => {
+        let batch = null;
+        if (diploma.batchId) {
+          batch = await ctx.db.get(diploma.batchId);
+        }
+        return {
+          ...diploma,
+          batch,
+        };
+      })
+    );
+    
+    return diplomasWithBatch;
+  },
+});
+
+export const getDiplomaWithBatch = query({
+  args: { diplomaId: v.id("diplomas") },
+  handler: async (ctx, args) => {
+    const diploma = await ctx.db.get(args.diplomaId);
+    if (!diploma) return null;
+    
+    let batch = null;
+    if (diploma.batchId) {
+      batch = await ctx.db.get(diploma.batchId);
+    }
+    
+    return {
+      ...diploma,
+      batch,
+    };
+  },
+});

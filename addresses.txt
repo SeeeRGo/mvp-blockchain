@@ -1,0 +1,7 @@
+PublisherRegistry: 0x314419ee6E79F28Db6433669CfFa3fc79e997542
+BatchAnchor: 0xB56313F400DBc99e54F375f7a099d9C7F1F2A740
+
+{
+  batchId: 'j97becv6adradfaa1x0en6a0xd801v8t',
+  txHash: '0x2ca00950776f3'
+}
