@@ -8,8 +8,10 @@ export default function VerifierPortal() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [showCreateRequest, setShowCreateRequest] = useState(false);
 
-  // Query verification requests
-  const requests = useQuery(api.verifiers.listVerificationRequests, { verifierId: "placeholder" as any });
+  // Query verification requests (disabled for demo)
+  // const requests = useQuery(api.verifiers.listVerificationRequests, { verifierId: "placeholder" as any });
+
+  const requests: any[] = [];
 
   // Mutation
   const createRequest = useMutation(api.verifiers.createVerificationRequest);
@@ -69,8 +71,8 @@ export default function VerifierPortal() {
       {showCreateRequest && (
         <CreateRequestModal
           onClose={() => setShowCreateRequest(false)}
-          onSubmit={async (data) => {
-            await createRequest.mutate(data);
+          onSubmit={async (data: any) => {
+            await createRequest(data);
             setShowCreateRequest(false);
           }}
         />

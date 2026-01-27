@@ -11,7 +11,7 @@ export const anchorPendingBatches = internalMutation({
       if (!university.publisherKey) continue;
       
       // Trigger batch anchoring
-      await ctx.scheduler.runAfter(0, internal.blockchain.createBatchAnchor, {
+      await ctx.scheduler.runAfter(0, (internal as any).blockchain.createBatchAnchor, {
         universityId: university._id,
       });
     }

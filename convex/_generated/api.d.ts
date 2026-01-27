@@ -11,9 +11,11 @@
 import type * as batchItems from "../batchItems.js";
 import type * as batches from "../batches.js";
 import type * as blockchain from "../blockchain.js";
+import type * as client from "../client.js";
 import type * as cron from "../cron.js";
 import type * as diplomas from "../diplomas.js";
 import type * as universities from "../universities.js";
+import type * as users from "../users.js";
 import type * as verifiers from "../verifiers.js";
 import type * as wallet from "../wallet.js";
 
@@ -27,9 +29,11 @@ declare const fullApi: ApiFromModules<{
   batchItems: typeof batchItems;
   batches: typeof batches;
   blockchain: typeof blockchain;
+  client: typeof client;
   cron: typeof cron;
   diplomas: typeof diplomas;
   universities: typeof universities;
+  users: typeof users;
   verifiers: typeof verifiers;
   wallet: typeof wallet;
 }>;

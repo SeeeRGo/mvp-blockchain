@@ -2,6 +2,17 @@ import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
 
 // Query functions
+export const getByName = query({
+  args: { name: v.string() },
+  handler: async (ctx, args) => {
+    const university = await ctx.db
+      .query("universities")
+      .withIndex("by_name", (q) => q.eq("name", args.name))
+      .first();
+    return university;
+  },
+});
+
 export const getProfile = query({
   args: { universityId: v.id("universities") },
   handler: async (ctx, args) => {
@@ -65,6 +76,29 @@ export const getStats = query({
 });
 
 // Mutation functions
+export const ensureDemoUniversity = mutation({
+  args: {},
+  handler: async (ctx) => {
+    // Check if demo university already exists
+    const existing = await ctx.db
+      .query("universities")
+      .withIndex("by_name", (q) => q.eq("name", "Demo University"))
+      .first();
+
+    if (existing) {
+      return existing._id;
+    }
+
+    // Create demo university
+    const universityId = await ctx.db.insert("universities", {
+      name: "Demo University",
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    });
+    return universityId;
+  },
+});
+
 export const register = mutation({
   args: {
     name: v.string(),
@@ -113,17 +147,33 @@ export const updateAttestation = mutation({
 export const createDiploma = mutation({
   args: {
     universityId: v.id("universities"),
-    ownerId: v.id("users"),
+    ownerEmail: v.string(),
     data: v.any(),
   },
   handler: async (ctx, args) => {
+    // Get or create user by email
+    const existingUser = await ctx.db
+      .query("users")
+      .withIndex("by_email", (q) => q.eq("email", args.ownerEmail))
+      .first();
+
+    let ownerId: any;
+    if (!existingUser) {
+      ownerId = await ctx.db.insert("users", {
+        email: args.ownerEmail,
+        createdAt: Date.now(),
+      });
+    } else {
+      ownerId = existingUser._id;
+    }
+    
     // Calculate diploma hash using simple hash function
     const dataString = JSON.stringify(args.data);
     const diplomaHash = simpleHash(dataString);
     
     const diplomaId = await ctx.db.insert("diplomas", {
       universityId: args.universityId,
-      ownerId: args.ownerId,
+      ownerId,
       diplomaHash,
       status: "pending",
       data: args.data,

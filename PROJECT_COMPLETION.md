@@ -77,7 +77,7 @@ mvp-blockchain/
 │   ├── layout.tsx
 │   ├── page.tsx
 │   └── globals.css
-├── convex/                    ✅ Backend
+├── convex/                    ✅ Backend`
 │   ├── schema.ts              ✅ Database schema
 │   ├── convex.config.ts        ✅ Configuration
 │   ├── universities.ts         ✅ University functions

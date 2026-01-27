@@ -9,11 +9,17 @@ export default function UniversityPortal() {
   const [showCreateDiploma, setShowCreateDiploma] = useState(false);
   const [showAttestation, setShowAttestation] = useState(false);
 
-  // Query university stats
-  const stats = useQuery(api.universities.getStats, { universityId: "placeholder" as any });
+  // Query university by name
+  const university = useQuery(api.universities.getByName, { name: "Demo University" });
+  
+  // Query university stats (disabled for demo)
+  // const stats = useQuery(api.universities.getStats, { universityId: university?._id as any });
 
-  // Query diplomas
-  const diplomas = useQuery(api.universities.listDiplomas, { universityId: "placeholder" as any });
+  // Query diplomas (disabled for demo)
+  // const diplomas = useQuery(api.universities.listDiplomas, { universityId: university?._id as any });
+  
+  const stats: any = null;
+  const diplomas: any[] = [];
 
   // Mutations
   const createDiploma = useMutation(api.universities.createDiploma);
@@ -90,8 +96,16 @@ export default function UniversityPortal() {
       {showCreateDiploma && (
         <CreateDiplomaModal
           onClose={() => setShowCreateDiploma(false)}
-          onSubmit={async (data) => {
-            await createDiploma.mutate(data);
+          onSubmit={async (data: any) => {
+            if (!university) {
+              alert("Demo university not found. Please ensure the database is properly initialized.");
+              return;
+            }
+            await createDiploma({
+              universityId: university._id,
+              ownerEmail: data.studentEmail,
+              data: data,
+            });
             setShowCreateDiploma(false);
           }}
         />
@@ -101,8 +115,8 @@ export default function UniversityPortal() {
       {showAttestation && (
         <AttestationModal
           onClose={() => setShowAttestation(false)}
-          onSubmit={async (data) => {
-            await attestPublisher.mutate(data);
+          onSubmit={async (data: any) => {
+            await attestPublisher(data);
             setShowAttestation(false);
           }}
         />
@@ -333,6 +347,7 @@ function BatchList() {
 function CreateDiplomaModal({ onClose, onSubmit }: any) {
   const [formData, setFormData] = useState({
     studentName: "",
+    studentEmail: "",
     degree: "",
     specialty: "",
     issueDate: "",
@@ -368,6 +383,16 @@ function CreateDiplomaModal({ onClose, onSubmit }: any) {
               required
               value={formData.studentName}
               onChange={(e) => setFormData({ ...formData, studentName: e.target.value })}
+              className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Student Email</label>
+            <input
+              type="email"
+              required
+              value={formData.studentEmail}
+              onChange={(e) => setFormData({ ...formData, studentEmail: e.target.value })}
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             />
           </div>

@@ -67,7 +67,7 @@ export const approveSharing = mutation({
     if (!diploma) throw new Error("Diploma not found");
     
     // Filter diploma data to only include shared fields
-    const sharedData = {};
+    const sharedData: Record<string, any> = {};
     args.sharedFields.forEach(field => {
       sharedData[field] = diploma.data[field];
     });

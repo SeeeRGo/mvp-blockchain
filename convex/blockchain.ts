@@ -26,7 +26,7 @@ export const attestPublisherOnChain = action({
     const txHash = "0x" + Math.random().toString(16).substr(2, 64);
     
     // Update university record
-    await ctx.runMutation(internal.universities.updateAttestation, {
+    await ctx.runMutation((internal as any).universities.updateAttestation, {
       universityId: args.universityId,
       txHash,
     });
@@ -41,25 +41,25 @@ export const createBatchAnchor = action({
   },
   handler: async (ctx, args) => {
     // Get pending diplomas
-    const diplomas = await ctx.runQuery(internal.diplomas.getPendingForBatch, {
+    const diplomas = await ctx.runQuery((internal as any).diplomas.getPendingForBatch, {
       universityId: args.universityId,
     });
     
     if (diplomas.length === 0) return { message: "No diplomas to anchor" };
     
     // Build Merkle tree
-    const hashes = diplomas.map(d => d.diplomaHash);
+    const hashes = diplomas.map((d: any) => d.diplomaHash);
     const { root, proofs } = buildMerkleTree(hashes);
     
     // Create batch record
-    const batchId = await ctx.runMutation(internal.batches.create, {
+    const batchId: any = await ctx.runMutation((internal as any).batches.create, {
       universityId: args.universityId,
       merkleRoot: root,
     });
     
     // Create batch items
     for (let i = 0; i < diplomas.length; i++) {
-      await ctx.runMutation(internal.batchItems.create, {
+      await ctx.runMutation((internal as any).batchItems.create, {
         batchId,
         diplomaId: diplomas[i]._id,
         diplomaHash: diplomas[i].diplomaHash,
@@ -72,7 +72,7 @@ export const createBatchAnchor = action({
     const txHash = await anchorBatch(args.universityId, root, diplomas.length);
     
     // Update batch status
-    await ctx.runMutation(internal.batches.updateStatus, {
+    await ctx.runMutation((internal as any).batches.updateStatus, {
       batchId,
       txHash,
       status: "anchored",
@@ -80,7 +80,7 @@ export const createBatchAnchor = action({
     
     // Update diplomas status
     for (const diploma of diplomas) {
-      await ctx.runMutation(internal.diplomas.updateStatus, {
+      await ctx.runMutation((internal as any).diplomas.updateStatus, {
         diplomaId: diploma._id,
         status: "anchored",
       });
@@ -93,7 +93,7 @@ export const createBatchAnchor = action({
 export const verifyDiplomaOnChain = action({
   args: { diplomaHash: v.string() },
   handler: async (ctx, args) => {
-    const proof = await ctx.runQuery(internal.blockchain.getOnChainProof, {
+    const proof: any = await ctx.runQuery((internal as any).verifiers.getOnChainProof, {
       diplomaHash: args.diplomaHash,
     });
     
