@@ -4,8 +4,8 @@ import { ConvexClientProvider } from "./providers";
 import DatabaseInitializer from "./components/DatabaseInitializer";
 
 export const metadata: Metadata = {
-  title: "DiplomaChain - Secure Diploma Verification",
-  description: "Issue, verify, and manage academic diplomas with blockchain technology",
+  title: "DiplomaChain - Безопасная верификация дипломов",
+  description: "Выпускайте, проверяйте и управляйте академическими дипломами с использованием блокчейн-технологий",
 };
 
 export default function RootLayout({
@@ -14,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ru">
       <body className="antialiased">
         <ConvexClientProvider>
           <DatabaseInitializer />

@@ -22,7 +22,7 @@ export default function VerifierPortal() {
           <div className="flex justify-between h-16">
             <div className="flex items-center">
               <h1 className="text-2xl font-bold text-gray-900">
-                Verifier Portal
+                Портал верификатора
               </h1>
             </div>
             <nav className="flex items-center space-x-4">
@@ -34,7 +34,7 @@ export default function VerifierPortal() {
                     : "text-gray-700 hover:bg-gray-100"
                 }`}
               >
-                Dashboard
+                Панель управления
               </button>
               <button
                 onClick={() => setActiveTab("requests")}
@@ -44,7 +44,7 @@ export default function VerifierPortal() {
                     : "text-gray-700 hover:bg-gray-100"
                 }`}
               >
-                Verification Requests
+                Запросы на верификацию
               </button>
             </nav>
           </div>
@@ -86,19 +86,19 @@ function Dashboard({ onCreateRequest }: any) {
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <StatCard
-          title="Total Requests"
+          title="Всего запросов"
           value="24"
           icon="📋"
           color="purple"
         />
         <StatCard
-          title="Approved"
+          title="Одобрено"
           value="18"
           icon="✅"
           color="green"
         />
         <StatCard
-          title="Pending"
+          title="Ожидают"
           value="6"
           icon="⏳"
           color="yellow"
@@ -107,33 +107,33 @@ function Dashboard({ onCreateRequest }: any) {
 
       {/* Quick Actions */}
       <div className="bg-white shadow rounded-lg p-6">
-        <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
+        <h2 className="text-lg font-semibold mb-4">Быстрые действия</h2>
         <button
           onClick={onCreateRequest}
           className="w-full flex items-center justify-center px-4 py-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700"
         >
           <span className="mr-2">➕</span>
-          Create Verification Request
+          Создать запрос на верификацию
         </button>
       </div>
 
       {/* Recent Activity */}
       <div className="bg-white shadow rounded-lg p-6">
-        <h2 className="text-lg font-semibold mb-4">Recent Verifications</h2>
+        <h2 className="text-lg font-semibold mb-4">Недавние верификации</h2>
         <div className="space-y-3">
           <ActivityItem
-            title="Diploma verified for Ivan Ivanov"
-            time="1 hour ago"
+            title="Диплом проверен для Ивана Иванова"
+            time="1 час назад"
             status="completed"
           />
           <ActivityItem
-            title="Verification request approved by owner"
-            time="3 hours ago"
+            title="Запрос на верификацию одобрен владельцем"
+            time="3 часа назад"
             status="completed"
           />
           <ActivityItem
-            title="New verification request created"
-            time="5 hours ago"
+            title="Создан новый запрос на верификацию"
+            time="5 часов назад"
             status="pending"
           />
         </div>
@@ -190,19 +190,19 @@ function RequestList({ requests, onCreateRequest }: any) {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold text-gray-900">
-          Verification Requests
+          Запросы на верификацию
         </h2>
         <button
           onClick={onCreateRequest}
           className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700"
         >
-          Create Request
+          Создать запрос
         </button>
       </div>
 
       {requests?.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-gray-500">No verification requests yet</p>
+          <p className="text-gray-500">Запросов на верификацию пока нет</p>
         </div>
       ) : (
         <div className="bg-white shadow rounded-lg overflow-hidden">
@@ -210,19 +210,19 @@ function RequestList({ requests, onCreateRequest }: any) {
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Request ID
+                  ID запроса
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
+                  Статус
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Created
+                  Создан
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Expires
+                  Истекает
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
+                  Действия
                 </th>
               </tr>
             </thead>
@@ -249,7 +249,7 @@ function RequestList({ requests, onCreateRequest }: any) {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <button className="text-purple-600 hover:text-purple-900 mr-3">
-                      View
+                      Просмотр
                     </button>
                     {request.diploma?.status === "anchored" && request.batch?.txHash && (
                       <a
@@ -261,7 +261,7 @@ function RequestList({ requests, onCreateRequest }: any) {
                         <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                         </svg>
-                        View on Arbiscan
+                        Просмотр на Arbiscan
                       </a>
                     )}
                   </td>
@@ -278,10 +278,10 @@ function RequestList({ requests, onCreateRequest }: any) {
 // Status Badge Component
 function StatusBadge({ status }: any) {
   const statusConfig = {
-    pending: { color: "bg-yellow-100 text-yellow-800", text: "Pending" },
-    approved: { color: "bg-green-100 text-green-800", text: "Approved" },
-    rejected: { color: "bg-red-100 text-red-800", text: "Rejected" },
-    expired: { color: "bg-gray-100 text-gray-800", text: "Expired" },
+    pending: { color: "bg-yellow-100 text-yellow-800", text: "Ожидает" },
+    approved: { color: "bg-green-100 text-green-800", text: "Одобрено" },
+    rejected: { color: "bg-red-100 text-red-800", text: "Отклонено" },
+    expired: { color: "bg-gray-100 text-gray-800", text: "Истекло" },
   };
 
   const config = statusConfig[status as keyof typeof statusConfig] || statusConfig.pending;
@@ -302,13 +302,13 @@ function CreateRequestModal({ onClose, onSubmit }: any) {
   });
 
   const availableFields = [
-    { id: "studentName", label: "Student Name" },
-    { id: "degree", label: "Degree" },
-    { id: "specialty", label: "Specialty" },
-    { id: "issueDate", label: "Issue Date" },
-    { id: "graduationDate", label: "Graduation Date" },
-    { id: "gpa", label: "GPA" },
-    { id: "diplomaNumber", label: "Diploma Number" },
+    { id: "studentName", label: "Имя студента" },
+    { id: "degree", label: "Степень" },
+    { id: "specialty", label: "Специальность" },
+    { id: "issueDate", label: "Дата выдачи" },
+    { id: "graduationDate", label: "Дата окончания" },
+    { id: "gpa", label: "Средний балл" },
+    { id: "diplomaNumber", label: "Номер диплома" },
   ];
 
   const handleFieldToggle = (fieldId: string) => {
@@ -334,7 +334,7 @@ function CreateRequestModal({ onClose, onSubmit }: any) {
     <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-xl max-w-lg w-full mx-4">
         <div className="flex justify-between items-center px-6 py-4 border-b">
-          <h3 className="text-lg font-semibold">Create Verification Request</h3>
+          <h3 className="text-lg font-semibold">Создать запрос на верификацию</h3>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-500"
@@ -345,7 +345,7 @@ function CreateRequestModal({ onClose, onSubmit }: any) {
         <form onSubmit={handleSubmit} className="px-6 py-4 space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Diploma ID or Hash
+              ID или хеш диплома
             </label>
             <input
               type="text"
@@ -353,15 +353,15 @@ function CreateRequestModal({ onClose, onSubmit }: any) {
               value={formData.diplomaHash}
               onChange={(e) => setFormData({ ...formData, diplomaHash: e.target.value })}
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
-              placeholder="Enter the diploma ID or hash (both work)"
+              placeholder="Введите ID или хеш диплома (оба работают)"
             />
             <p className="mt-1 text-xs text-gray-500">
-              You can use either the Diploma ID shown after upload or the Diploma Hash
+              Вы можете использовать ID диплома, показанный после загрузки, или хеш диплома
             </p>
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Requested Fields
+              Запрошенные поля
             </label>
             <div className="space-y-2">
               {availableFields.map((field) => (
@@ -381,7 +381,7 @@ function CreateRequestModal({ onClose, onSubmit }: any) {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Access Duration (TTL)
+              Длительность доступа (TTL)
             </label>
             <select
               value={formData.ttlSeconds.toString()}
@@ -390,16 +390,16 @@ function CreateRequestModal({ onClose, onSubmit }: any) {
               }
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
             >
-              <option value="3600">1 Hour</option>
-              <option value="86400">24 Hours</option>
-              <option value="604800">7 Days</option>
+              <option value="3600">1 час</option>
+              <option value="86400">24 часа</option>
+              <option value="604800">7 дней</option>
             </select>
           </div>
           <div className="bg-purple-50 border-l-4 border-purple-400 p-4">
             <p className="text-sm text-purple-800">
-              <strong>Important:</strong> The diploma owner will receive a
-              notification and must explicitly approve sharing of the requested fields.
-              Access will expire after the selected duration.
+              <strong>Важно:</strong> Владелец диплома получит
+              уведомление и должен явно одобрить предоставление запрошенных полей.
+              Доступ истечет после выбранной длительности.
             </p>
           </div>
           <div className="flex justify-end space-x-3 pt-4">
@@ -408,13 +408,13 @@ function CreateRequestModal({ onClose, onSubmit }: any) {
               onClick={onClose}
               className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50"
             >
-              Cancel
+              Отмена
             </button>
             <button
               type="submit"
               className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700"
             >
-              Create Request
+              Создать запрос
             </button>
           </div>
         </form>

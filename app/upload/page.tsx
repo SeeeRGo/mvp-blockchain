@@ -39,7 +39,7 @@ export default function UploadDiploma() {
     try {
       // Check if university exists
       if (!university) {
-        setError("Demo university not found. Please ensure the database is properly initialized.");
+        setError("Демонстрационный университет не найден. Убедитесь, что база данных правильно инициализирована.");
         setIsSubmitting(false);
         return;
       }
@@ -53,7 +53,7 @@ export default function UploadDiploma() {
       setCreatedDiploma(result);
       setSuccess(true);
     } catch (err) {
-      setError("Failed to create diploma. Please try again.");
+      setError("Не удалось создать диплом. Попробуйте снова.");
       console.error(err);
     } finally {
       setIsSubmitting(false);
@@ -66,7 +66,7 @@ export default function UploadDiploma() {
         <header className="bg-white shadow-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <Link href="/" className="text-blue-600 hover:text-blue-800 font-medium">
-              ← Back to Home
+              ← Вернуться на главную
             </Link>
           </div>
         </header>
@@ -77,36 +77,36 @@ export default function UploadDiploma() {
               <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-4xl">✅</span>
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">Diploma Created Successfully!</h2>
-              <p className="text-gray-600">Your diploma has been issued and is ready to be anchored to the blockchain.</p>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">Диплом успешно создан!</h2>
+              <p className="text-gray-600">Ваш диплом выдан и готов к закреплению на блокчейне.</p>
             </div>
 
             <div className="bg-gray-50 rounded-lg p-6 mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Diploma Details</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Детали диплома</h3>
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Student Name:</span>
+                  <span className="text-gray-600">Имя студента:</span>
                   <span className="font-medium">{formData.studentName}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Degree:</span>
+                  <span className="text-gray-600">Степень:</span>
                   <span className="font-medium">{formData.degree}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Specialty:</span>
+                  <span className="text-gray-600">Специальность:</span>
                   <span className="font-medium">{formData.specialty}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Diploma Number:</span>
+                  <span className="text-gray-600">Номер диплома:</span>
                   <span className="font-medium">{formData.diplomaNumber}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Diploma ID:</span>
+                  <span className="text-gray-600">ID диплома:</span>
                   <span className="font-medium text-sm text-blue-600">{createdDiploma}</span>
                 </div>
                 {diploma && (
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Diploma Hash:</span>
+                    <span className="text-gray-600">Хеш диплома:</span>
                     <span className="font-medium text-sm text-blue-600">{diploma.diplomaHash}</span>
                   </div>
                 )}
@@ -114,25 +114,25 @@ export default function UploadDiploma() {
             </div>
 
             <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
-              <h4 className="font-semibold text-blue-900 mb-2">Verification Information</h4>
+              <h4 className="font-semibold text-blue-900 mb-2">Информация для верификации</h4>
               <p className="text-sm text-blue-800 mb-2">
-                You can verify this diploma using either:
+                Вы можете проверить этот диплом, используя:
               </p>
               <ul className="text-sm text-blue-800 list-disc list-inside space-y-1">
-                <li><strong>Diploma ID:</strong> {createdDiploma}</li>
+                <li><strong>ID диплома:</strong> {createdDiploma}</li>
                 {diploma && (
-                  <li><strong>Diploma Hash:</strong> {diploma.diplomaHash}</li>
+                  <li><strong>Хеш диплома:</strong> {diploma.diplomaHash}</li>
                 )}
               </ul>
               <p className="text-sm text-blue-800 mt-2">
-                Copy either the Diploma ID or Hash above and paste it in the verification page to find your diploma.
+                Скопируйте ID или хеш диплома выше и вставьте на странице верификации, чтобы найти ваш диплом.
               </p>
             </div>
 
             <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6">
               <p className="text-sm text-blue-800">
-                <strong>Next Steps:</strong> The diploma will be automatically included in the next batch anchoring process.
-                Once anchored, it will be permanently stored on the blockchain and can be verified by anyone.
+                <strong>Следующие шаги:</strong> Диплом будет автоматически включен в следующий процесс закрепления пакета.
+                После закрепления он будет постоянно храниться в блокчейне и может быть проверен кем угодно.
               </p>
             </div>
 
@@ -141,13 +141,13 @@ export default function UploadDiploma() {
                 href="/"
                 className="flex-1 px-4 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors text-center"
               >
-                Back to Home
+                Вернуться на главную
               </Link>
               <Link
                 href="/verify"
                 className="flex-1 px-4 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors text-center"
               >
-                Verify Diploma
+                Проверить диплом
               </Link>
             </div>
           </div>
@@ -161,7 +161,7 @@ export default function UploadDiploma() {
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <Link href="/" className="text-blue-600 hover:text-blue-800 font-medium">
-            ← Back to Home
+            ← Вернуться на главную
           </Link>
         </div>
       </header>
@@ -172,8 +172,8 @@ export default function UploadDiploma() {
             <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-3xl">📤</span>
             </div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Upload Diploma</h2>
-            <p className="text-gray-600">Fill in the details below to issue a new diploma</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">Загрузить диплом</h2>
+            <p className="text-gray-600">Заполните детали ниже для выдачи нового диплома</p>
           </div>
 
           {error && (
@@ -185,7 +185,7 @@ export default function UploadDiploma() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="studentName" className="block text-sm font-medium text-gray-700 mb-2">
-                Student Name *
+                Имя студента *
               </label>
               <input
                 type="text"
@@ -194,13 +194,13 @@ export default function UploadDiploma() {
                 value={formData.studentName}
                 onChange={(e) => setFormData({ ...formData, studentName: e.target.value })}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                placeholder="Enter student's full name"
+                placeholder="Введите полное имя студента"
               />
             </div>
 
             <div>
               <label htmlFor="studentEmail" className="block text-sm font-medium text-gray-700 mb-2">
-                Student Email *
+                Email студента *
               </label>
               <input
                 type="email"
@@ -215,7 +215,7 @@ export default function UploadDiploma() {
 
             <div>
               <label htmlFor="degree" className="block text-sm font-medium text-gray-700 mb-2">
-                Degree *
+                Степень *
               </label>
               <input
                 type="text"
@@ -224,13 +224,13 @@ export default function UploadDiploma() {
                 value={formData.degree}
                 onChange={(e) => setFormData({ ...formData, degree: e.target.value })}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                placeholder="e.g., Bachelor of Science"
+                placeholder="например, Бакалавр наук"
               />
             </div>
 
             <div>
               <label htmlFor="specialty" className="block text-sm font-medium text-gray-700 mb-2">
-                Specialty *
+                Специальность *
               </label>
               <input
                 type="text"
@@ -239,14 +239,14 @@ export default function UploadDiploma() {
                 value={formData.specialty}
                 onChange={(e) => setFormData({ ...formData, specialty: e.target.value })}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                placeholder="e.g., Computer Science"
+                placeholder="например, Информатика"
               />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="issueDate" className="block text-sm font-medium text-gray-700 mb-2">
-                  Issue Date *
+                  Дата выдачи *
                 </label>
                 <input
                   type="date"
@@ -260,7 +260,7 @@ export default function UploadDiploma() {
 
               <div>
                 <label htmlFor="graduationDate" className="block text-sm font-medium text-gray-700 mb-2">
-                  Graduation Date *
+                  Дата окончания *
                 </label>
                 <input
                   type="date"
@@ -276,7 +276,7 @@ export default function UploadDiploma() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="gpa" className="block text-sm font-medium text-gray-700 mb-2">
-                  GPA
+                  Средний балл
                 </label>
                 <input
                   type="text"
@@ -284,13 +284,13 @@ export default function UploadDiploma() {
                   value={formData.gpa}
                   onChange={(e) => setFormData({ ...formData, gpa: e.target.value })}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                  placeholder="e.g., 3.8"
+                  placeholder="например, 3.8"
                 />
               </div>
 
               <div>
                 <label htmlFor="diplomaNumber" className="block text-sm font-medium text-gray-700 mb-2">
-                  Diploma Number *
+                  Номер диплома *
                 </label>
                 <input
                   type="text"
@@ -299,15 +299,15 @@ export default function UploadDiploma() {
                   value={formData.diplomaNumber}
                   onChange={(e) => setFormData({ ...formData, diplomaNumber: e.target.value })}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-                  placeholder="e.g., DIP-2024-001"
+                  placeholder="например, DIP-2024-001"
                 />
               </div>
             </div>
 
             <div className="bg-blue-50 border-l-4 border-blue-400 p-4">
               <p className="text-sm text-blue-800">
-                <strong>Note:</strong> After creating the diploma, it will be automatically included in the next batch
-                anchoring process. Once anchored, it will be permanently stored on the blockchain.
+                <strong>Примечание:</strong> После создания диплом будет автоматически включен в следующий процесс
+                закрепления пакета. После закрепления он будет постоянно храниться в блокчейне.
               </p>
             </div>
 
@@ -316,7 +316,7 @@ export default function UploadDiploma() {
               disabled={isSubmitting}
               className="w-full px-4 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
-              {isSubmitting ? "Creating Diploma..." : "Create Diploma"}
+              {isSubmitting ? "Создание диплома..." : "Создать диплом"}
             </button>
           </form>
         </div>

@@ -43,7 +43,7 @@ export default function UniversityPortal() {
           <div className="flex justify-between h-16">
             <div className="flex items-center">
               <h1 className="text-2xl font-bold text-gray-900">
-                University Portal
+                Портал университета
               </h1>
             </div>
             <nav className="flex items-center space-x-4">
@@ -55,7 +55,7 @@ export default function UniversityPortal() {
                     : "text-gray-700 hover:bg-gray-100"
                 }`}
               >
-                Dashboard
+                Панель управления
               </button>
               <button
                 onClick={() => setActiveTab("diplomas")}
@@ -65,7 +65,7 @@ export default function UniversityPortal() {
                     : "text-gray-700 hover:bg-gray-100"
                 }`}
               >
-                Diplomas
+                Дипломы
               </button>
               <button
                 onClick={() => setActiveTab("batches")}
@@ -75,7 +75,7 @@ export default function UniversityPortal() {
                     : "text-gray-700 hover:bg-gray-100"
                 }`}
               >
-                Batches
+                Пакеты
               </button>
             </nav>
           </div>
@@ -108,7 +108,7 @@ export default function UniversityPortal() {
           onClose={() => setShowCreateDiploma(false)}
           onSubmit={async (data: any) => {
             if (!university) {
-              alert("Demo university not found. Please ensure the database is properly initialized.");
+              alert("Демонстрационный университет не найден. Убедитесь, что база данных правильно инициализирована.");
               return;
             }
             await createDiploma({
@@ -142,19 +142,19 @@ function Dashboard({ stats, onCreateDiploma, onAttestPublisher }: any) {
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <StatCard
-          title="Total Diplomas"
+          title="Всего дипломов"
           value={stats?.total || 0}
           icon="📜"
           color="blue"
         />
         <StatCard
-          title="Pending Acceptance"
+          title="Ожидают принятия"
           value={stats?.pending || 0}
           icon="⏳"
           color="yellow"
         />
         <StatCard
-          title="Anchored on Blockchain"
+          title="Закреплено на блокчейне"
           value={stats?.anchored || 0}
           icon="✅"
           color="green"
@@ -163,42 +163,42 @@ function Dashboard({ stats, onCreateDiploma, onAttestPublisher }: any) {
 
       {/* Quick Actions */}
       <div className="bg-white shadow rounded-lg p-6">
-        <h2 className="text-lg font-semibold mb-4">Quick Actions</h2>
+        <h2 className="text-lg font-semibold mb-4">Быстрые действия</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <button
             onClick={onCreateDiploma}
             className="flex items-center justify-center px-4 py-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
           >
             <span className="mr-2">📝</span>
-            Create New Diploma
+            Создать новый диплом
           </button>
           <button
             onClick={onAttestPublisher}
             className="flex items-center justify-center px-4 py-3 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700"
           >
             <span className="mr-2">🔐</span>
-            Attest Publisher
+            Аттестовать издателя
           </button>
         </div>
       </div>
 
       {/* Recent Activity */}
       <div className="bg-white shadow rounded-lg p-6">
-        <h2 className="text-lg font-semibold mb-4">Recent Activity</h2>
+        <h2 className="text-lg font-semibold mb-4">Недавняя активность</h2>
         <div className="space-y-3">
           <ActivityItem
-            title="Diploma issued to Ivan Ivanov"
-            time="2 hours ago"
+            title="Диплом выдан Ивану Иванову"
+            time="2 часа назад"
             status="completed"
           />
           <ActivityItem
-            title="Batch #123 anchored to blockchain"
-            time="5 hours ago"
+            title="Пакет #123 закреплен на блокчейне"
+            time="5 часов назад"
             status="completed"
           />
           <ActivityItem
-            title="Publisher attested on-chain"
-            time="1 day ago"
+            title="Издатель аттестован в блокчейне"
+            time="1 день назад"
             status="completed"
           />
         </div>
@@ -259,25 +259,25 @@ function DiplomaList({ diplomas, onCreateDiploma }: any) {
       setCopiedHash(hash);
       setTimeout(() => setCopiedHash(null), 2000);
     } catch (err) {
-      console.error("Failed to copy hash:", err);
+      console.error("Не удалось скопировать хеш:", err);
     }
   };
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-900">Issued Diplomas</h2>
+        <h2 className="text-2xl font-bold text-gray-900">Выданные дипломы</h2>
         <button
           onClick={onCreateDiploma}
           className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
         >
-          Create Diploma
+          Создать диплом
         </button>
       </div>
 
       {diplomas?.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-gray-500">No diplomas issued yet</p>
+          <p className="text-gray-500">Дипломы еще не выданы</p>
         </div>
       ) : (
         <div className="bg-white shadow rounded-lg overflow-hidden">
@@ -285,16 +285,16 @@ function DiplomaList({ diplomas, onCreateDiploma }: any) {
             <thead className="bg-gray-50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Student Name
+                  Имя студента
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Degree
+                  Степень
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
+                  Статус
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Actions
+                  Действия
                 </th>
               </tr>
             </thead>
@@ -314,7 +314,7 @@ function DiplomaList({ diplomas, onCreateDiploma }: any) {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <button className="text-blue-600 hover:text-blue-900 mr-3">
-                      View
+                      Просмотр
                     </button>
                     {diploma.status === "anchored" && diploma.batch?.txHash && (
                       <>
@@ -323,17 +323,17 @@ function DiplomaList({ diplomas, onCreateDiploma }: any) {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-green-600 hover:text-green-900 flex items-center font-medium mr-2"
-                          title={`View transaction ${diploma.batch.txHash} on Arbiscan`}
+                          title={`Просмотр транзакции ${diploma.batch.txHash} на Arbiscan`}
                         >
                           <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                           </svg>
-                          View on Arbiscan
+                          Просмотр на Arbiscan
                         </a>
                         <button
                           onClick={() => handleCopyHash(diploma.batch.txHash)}
                           className="text-gray-600 hover:text-gray-900 flex items-center"
-                          title="Copy transaction hash"
+                          title="Копировать хеш транзакции"
                         >
                           {copiedHash === diploma.batch.txHash ? (
                             <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -361,9 +361,9 @@ function DiplomaList({ diplomas, onCreateDiploma }: any) {
 // Status Badge Component
 function StatusBadge({ status }: any) {
   const statusConfig = {
-    pending: { color: "bg-yellow-100 text-yellow-800", text: "Pending" },
-    accepted: { color: "bg-blue-100 text-blue-800", text: "Accepted" },
-    anchored: { color: "bg-green-100 text-green-800", text: "Anchored" },
+    pending: { color: "bg-yellow-100 text-yellow-800", text: "Ожидает" },
+    accepted: { color: "bg-blue-100 text-blue-800", text: "Принят" },
+    anchored: { color: "bg-green-100 text-green-800", text: "Закреплен" },
   };
 
   const config = statusConfig[status as keyof typeof statusConfig] || statusConfig.pending;
@@ -408,8 +408,8 @@ function BatchList({ university }: any) {
       });
       setResult(response);
     } catch (error) {
-      console.error("Failed to create batch:", error);
-      setResult({ error: "Failed to create batch. Please try again." });
+      console.error("Не удалось создать пакет:", error);
+      setResult({ error: "Не удалось создать пакет. Попробуйте снова." });
     } finally {
       setIsCreating(false);
     }
@@ -421,7 +421,7 @@ function BatchList({ university }: any) {
       setCopiedHash(hash);
       setTimeout(() => setCopiedHash(null), 2000);
     } catch (err) {
-      console.error("Failed to copy hash:", err);
+      console.error("Не удалось скопировать хеш:", err);
     }
   };
 
@@ -432,7 +432,7 @@ function BatchList({ university }: any) {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-900">Batch Anchoring</h2>
+        <h2 className="text-2xl font-bold text-gray-900">Закрепление пакетов</h2>
         <button
           onClick={handleCreateBatch}
           disabled={isCreating || !stats || stats.accepted === 0}
@@ -442,26 +442,26 @@ function BatchList({ university }: any) {
               : "bg-blue-600 hover:bg-blue-700"
           }`}
         >
-          {isCreating ? "Creating Batch..." : "Create Batch Now"}
+          {isCreating ? "Создание пакета..." : "Создать пакет сейчас"}
         </button>
       </div>
 
       {/* Stats Card */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <StatCard
-          title="Pending Diplomas"
+          title="Ожидающие дипломы"
           value={stats?.pending || 0}
           icon="⏳"
           color="yellow"
         />
         <StatCard
-          title="Ready to Anchor"
+          title="Готовы к закреплению"
           value={stats?.accepted || 0}
           icon="📦"
           color="blue"
         />
         <StatCard
-          title="Total Batches"
+          title="Всего пакетов"
           value={batches?.length || 0}
           icon="🔗"
           color="green"
@@ -477,10 +477,10 @@ function BatchList({ university }: any) {
             <p className="text-red-800">{result.error}</p>
           ) : (
             <div>
-              <p className="text-green-800 font-medium mb-2">✓ Batch created successfully!</p>
+              <p className="text-green-800 font-medium mb-2">✓ Пакет успешно создан!</p>
               <div className="text-sm text-green-700 space-y-1">
-                <p><strong>Batch ID:</strong> {result.batchId}</p>
-                <p><strong>Transaction Hash:</strong> {result.txHash}</p>
+                <p><strong>ID пакета:</strong> {result.batchId}</p>
+                <p><strong>Хеш транзакции:</strong> {result.txHash}</p>
               </div>
             </div>
           )}
@@ -490,12 +490,12 @@ function BatchList({ university }: any) {
       {/* Batches List */}
       <div className="bg-white shadow rounded-lg overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-200">
-          <h3 className="text-lg font-semibold text-gray-900">Batch History</h3>
+          <h3 className="text-lg font-semibold text-gray-900">История пакетов</h3>
         </div>
         
         {batches?.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-500">No batches created yet</p>
+            <p className="text-gray-500">Пакеты еще не созданы</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -503,22 +503,22 @@ function BatchList({ university }: any) {
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
+                    Статус
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Diplomas
+                    Дипломы
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Merkle Root
+                    Корень Меркла
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Transaction Hash
+                    Хеш транзакции
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Created
+                    Создан
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
+                    Действия
                   </th>
                 </tr>
               </thead>
@@ -539,7 +539,7 @@ function BatchList({ university }: any) {
                         <button
                           onClick={() => handleCopyHash(batch.merkleRoot)}
                           className="text-gray-400 hover:text-gray-600"
-                          title="Copy merkle root"
+                          title="Копировать корень Меркла"
                         >
                           {copiedHash === batch.merkleRoot ? (
                             <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -567,7 +567,7 @@ function BatchList({ university }: any) {
                           <button
                             onClick={() => handleCopyHash(batch.txHash)}
                             className="text-gray-400 hover:text-gray-600"
-                            title="Copy transaction hash"
+                            title="Копировать хеш транзакции"
                           >
                             {copiedHash === batch.txHash ? (
                               <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -581,7 +581,7 @@ function BatchList({ university }: any) {
                           </button>
                         </div>
                       ) : (
-                        <span className="text-xs text-gray-400">Not anchored</span>
+                        <span className="text-xs text-gray-400">Не закреплен</span>
                       )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -589,7 +589,7 @@ function BatchList({ university }: any) {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <button className="text-blue-600 hover:text-blue-900">
-                        View Details
+                        Просмотр деталей
                       </button>
                     </td>
                   </tr>
@@ -606,9 +606,9 @@ function BatchList({ university }: any) {
 // Batch Status Badge Component
 function BatchStatusBadge({ status }: any) {
   const statusConfig = {
-    pending: { color: "bg-yellow-100 text-yellow-800", text: "Pending" },
-    anchored: { color: "bg-green-100 text-green-800", text: "Anchored" },
-    failed: { color: "bg-red-100 text-red-800", text: "Failed" },
+    pending: { color: "bg-yellow-100 text-yellow-800", text: "Ожидает" },
+    anchored: { color: "bg-green-100 text-green-800", text: "Закреплен" },
+    failed: { color: "bg-red-100 text-red-800", text: "Ошибка" },
   };
 
   const config = statusConfig[status as keyof typeof statusConfig] || statusConfig.pending;
@@ -642,7 +642,7 @@ function CreateDiplomaModal({ onClose, onSubmit }: any) {
     <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-xl max-w-lg w-full mx-4">
         <div className="flex justify-between items-center px-6 py-4 border-b">
-          <h3 className="text-lg font-semibold">Create New Diploma</h3>
+          <h3 className="text-lg font-semibold">Создать новый диплом</h3>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-500"
@@ -653,7 +653,7 @@ function CreateDiplomaModal({ onClose, onSubmit }: any) {
         <form onSubmit={handleSubmit} className="px-6 py-4 space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Student Name
+              Имя студента
             </label>
             <input
               type="text"
@@ -664,7 +664,7 @@ function CreateDiplomaModal({ onClose, onSubmit }: any) {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Student Email</label>
+            <label className="block text-sm font-medium text-gray-700">Email студента</label>
             <input
               type="email"
               required
@@ -674,7 +674,7 @@ function CreateDiplomaModal({ onClose, onSubmit }: any) {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Degree</label>
+            <label className="block text-sm font-medium text-gray-700">Степень</label>
             <input
               type="text"
               required
@@ -685,7 +685,7 @@ function CreateDiplomaModal({ onClose, onSubmit }: any) {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Specialty
+              Специальность
             </label>
             <input
               type="text"
@@ -698,7 +698,7 @@ function CreateDiplomaModal({ onClose, onSubmit }: any) {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Issue Date
+                Дата выдачи
               </label>
               <input
                 type="date"
@@ -710,7 +710,7 @@ function CreateDiplomaModal({ onClose, onSubmit }: any) {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Graduation Date
+                Дата окончания
               </label>
               <input
                 type="date"
@@ -723,7 +723,7 @@ function CreateDiplomaModal({ onClose, onSubmit }: any) {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700">GPA</label>
+              <label className="block text-sm font-medium text-gray-700">Средний балл</label>
               <input
                 type="text"
                 value={formData.gpa}
@@ -733,7 +733,7 @@ function CreateDiplomaModal({ onClose, onSubmit }: any) {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Diploma Number
+                Номер диплома
               </label>
               <input
                 type="text"
@@ -750,13 +750,13 @@ function CreateDiplomaModal({ onClose, onSubmit }: any) {
               onClick={onClose}
               className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50"
             >
-              Cancel
+              Отмена
             </button>
             <button
               type="submit"
               className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
             >
-              Create Diploma
+              Создать диплом
             </button>
           </div>
         </form>
@@ -773,7 +773,7 @@ function AttestationModal({ onClose, onSubmit, university }: any) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!university) {
-      alert("University not found. Please ensure the database is properly initialized.");
+      alert("Университет не найден. Убедитесь, что база данных правильно инициализирована.");
       return;
     }
 
@@ -787,8 +787,8 @@ function AttestationModal({ onClose, onSubmit, university }: any) {
       });
       setResult(response);
     } catch (error: any) {
-      console.error("Failed to attest publisher:", error);
-      setResult({ error: error.message || "Failed to attest publisher. Please try again." });
+      console.error("Не удалось аттестовать издателя:", error);
+      setResult({ error: error.message || "Не удалось аттестовать издателя. Попробуйте снова." });
     } finally {
       setIsAttesting(false);
     }
@@ -798,7 +798,7 @@ function AttestationModal({ onClose, onSubmit, university }: any) {
     <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg shadow-xl max-w-lg w-full mx-4">
         <div className="flex justify-between items-center px-6 py-4 border-b">
-          <h3 className="text-lg font-semibold">Attest Publisher</h3>
+          <h3 className="text-lg font-semibold">Аттестовать издателя</h3>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-500"
@@ -809,7 +809,7 @@ function AttestationModal({ onClose, onSubmit, university }: any) {
         <div className="px-6 py-4 space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              University Name
+              Название университета
             </label>
             <input
               type="text"
@@ -820,20 +820,20 @@ function AttestationModal({ onClose, onSubmit, university }: any) {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Publisher Key (auto-generated from wallet)
+              Ключ издателя (автоматически генерируется из кошелька)
             </label>
             <input
               type="text"
-              value="Will be generated from your wallet address"
+              value="Будет сгенерирован из адреса вашего кошелька"
               className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 bg-gray-100 sm:text-sm"
               disabled
             />
           </div>
           <div className="bg-blue-50 border-l-4 border-blue-400 p-4">
             <p className="text-sm text-blue-800">
-              <strong>Important:</strong> This will attest your university on the
-              Arbitrum blockchain. A transaction will be submitted and the publisher key
-              (your wallet address) will be stored on-chain.
+              <strong>Важно:</strong> Это аттестует ваш университет в блокчейне
+              Arbitrum. Будет отправлена транзакция, и ключ издателя
+              (адрес вашего кошелька) будет сохранен в блокчейне.
             </p>
           </div>
           
@@ -846,10 +846,10 @@ function AttestationModal({ onClose, onSubmit, university }: any) {
                 <p className="text-red-800">{result.error}</p>
               ) : (
                 <div>
-                  <p className="text-green-800 font-medium mb-2">✓ Publisher attested successfully!</p>
+                  <p className="text-green-800 font-medium mb-2">✓ Издатель успешно аттестован!</p>
                   <div className="text-sm text-green-700 space-y-1">
-                    <p><strong>Publisher Key:</strong> {result.publisherKey}</p>
-                    <p><strong>Transaction Hash:</strong> {result.txHash}</p>
+                    <p><strong>Ключ издателя:</strong> {result.publisherKey}</p>
+                    <p><strong>Хеш транзакции:</strong> {result.txHash}</p>
                   </div>
                 </div>
               )}
@@ -862,7 +862,7 @@ function AttestationModal({ onClose, onSubmit, university }: any) {
               onClick={onClose}
               className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50"
             >
-              {result && !result.error ? "Close" : "Cancel"}
+              {result && !result.error ? "Закрыть" : "Отмена"}
             </button>
             {!result || result.error ? (
               <button
@@ -872,7 +872,7 @@ function AttestationModal({ onClose, onSubmit, university }: any) {
                   isAttesting ? "bg-gray-400 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"
                 }`}
               >
-                {isAttesting ? "Attesting..." : "Attest on Blockchain"}
+                {isAttesting ? "Аттестация..." : "Аттестовать в блокчейне"}
               </button>
             ) : null}
           </div>

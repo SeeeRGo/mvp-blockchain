@@ -30,8 +30,8 @@ export default function WalletPortal() {
         userId: selectedUser as any,
       });
     } catch (error) {
-      console.error("Failed to accept diploma:", error);
-      alert("Failed to accept diploma. Please try again.");
+      console.error("Не удалось принять диплом:", error);
+      alert("Не удалось принять диплом. Попробуйте снова.");
     } finally {
       setAccepting(null);
     }
@@ -43,7 +43,7 @@ export default function WalletPortal() {
       setCopiedHash(hash);
       setTimeout(() => setCopiedHash(null), 2000);
     } catch (err) {
-      console.error("Failed to copy hash:", err);
+      console.error("Не удалось скопировать хеш:", err);
     }
   };
   
@@ -63,11 +63,11 @@ export default function WalletPortal() {
   const getStatusText = (status: string) => {
     switch (status) {
       case "pending":
-        return "Pending Acceptance";
+        return "Ожидает принятия";
       case "accepted":
-        return "Accepted";
+        return "Принят";
       case "anchored":
-        return "Anchored on Blockchain";
+        return "Закреплен в блокчейне";
       default:
         return status;
     }
@@ -81,7 +81,7 @@ export default function WalletPortal() {
           <div className="flex justify-between h-16">
             <div className="flex items-center">
               <h1 className="text-2xl font-bold text-gray-900">
-                Wallet Portal
+                Портал кошелька
               </h1>
             </div>
             <nav className="flex items-center space-x-4">
@@ -89,13 +89,13 @@ export default function WalletPortal() {
                 href="/university"
                 className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100"
               >
-                University Portal
+                Портал университета
               </a>
               <a
                 href="/verifier"
                 className="px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100"
               >
-                Verifier Portal
+                Портал верификатора
               </a>
             </nav>
           </div>
@@ -106,16 +106,16 @@ export default function WalletPortal() {
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         {/* User Selection */}
         <div className="bg-white shadow rounded-lg p-6 mb-6">
-          <h2 className="text-lg font-semibold mb-4">Select User</h2>
+          <h2 className="text-lg font-semibold mb-4">Выбрать пользователя</h2>
           <p className="text-sm text-gray-500 mb-4">
-            Choose a user to view and manage their diplomas
+            Выберите пользователя для просмотра и управления его дипломами
           </p>
           <select
             value={selectedUser}
             onChange={(e) => setSelectedUser(e.target.value)}
             className="block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:ring-blue-500 focus:border-blue-500"
           >
-            <option value="">Select a user...</option>
+            <option value="">Выберите пользователя...</option>
             {users.map((user: any) => (
               <option key={user._id} value={user._id}>
                 {user.email} {user.phone ? `(${user.phone})` : ""}
@@ -125,7 +125,7 @@ export default function WalletPortal() {
           
           {users.length === 0 && (
             <p className="mt-4 text-sm text-gray-500">
-              No users found. Create a user first via the Convex dashboard or CLI.
+              Пользователи не найдены. Сначала создайте пользователя через панель Convex или CLI.
             </p>
           )}
         </div>
@@ -134,17 +134,17 @@ export default function WalletPortal() {
         {selectedUser && (
           <div className="bg-white shadow rounded-lg p-6">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold">My Diplomas</h2>
+              <h2 className="text-lg font-semibold">Мои дипломы</h2>
               <span className="text-sm text-gray-500">
-                {diplomas.length} diploma{diplomas.length !== 1 ? "s" : ""}
+                {diplomas.length} диплом{diplomas.length !== 1 ? "ов" : ""}
               </span>
             </div>
             
             {diplomas.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-gray-500">No diplomas found for this user</p>
+                <p className="text-gray-500">Дипломы для этого пользователя не найдены</p>
                 <p className="text-sm text-gray-400 mt-2">
-                  Diplomas will appear here once issued by a university
+                  Дипломы появятся здесь после выдачи университетом
                 </p>
               </div>
             ) : (
@@ -157,28 +157,28 @@ export default function WalletPortal() {
                     <div className="flex justify-between items-start">
                       <div className="flex-1">
                         <h3 className="font-medium text-gray-900 text-lg">
-                          {diploma.data?.studentName || "Unknown Student"}
+                          {diploma.data?.studentName || "Неизвестный студент"}
                         </h3>
                         <div className="mt-2 space-y-1">
                           <p className="text-sm text-gray-600">
-                            <span className="font-medium">Degree:</span> {diploma.data?.degree}
+                            <span className="font-medium">Степень:</span> {diploma.data?.degree}
                           </p>
                           <p className="text-sm text-gray-600">
-                            <span className="font-medium">Specialty:</span> {diploma.data?.specialty}
+                            <span className="font-medium">Специальность:</span> {diploma.data?.specialty}
                           </p>
                           {diploma.data?.gpa && (
                             <p className="text-sm text-gray-600">
-                              <span className="font-medium">GPA:</span> {diploma.data.gpa}
+                              <span className="font-medium">Средний балл:</span> {diploma.data.gpa}
                             </p>
                           )}
                           {diploma.data?.diplomaNumber && (
                             <p className="text-sm text-gray-600">
-                              <span className="font-medium">Diploma Number:</span> {diploma.data.diplomaNumber}
+                              <span className="font-medium">Номер диплома:</span> {diploma.data.diplomaNumber}
                             </p>
                           )}
                           {diploma.data?.issueDate && (
                             <p className="text-sm text-gray-600">
-                              <span className="font-medium">Issue Date:</span> {new Date(diploma.data.issueDate).toLocaleDateString()}
+                              <span className="font-medium">Дата выдачи:</span> {new Date(diploma.data.issueDate).toLocaleDateString()}
                             </p>
                           )}
                         </div>
@@ -195,12 +195,12 @@ export default function WalletPortal() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-xs text-blue-600 hover:text-blue-800 flex items-center font-medium"
-                                title={`View transaction ${diploma.batch.txHash} on Arbiscan`}
+                                title={`Просмотр транзакции ${diploma.batch.txHash} на Arbiscan`}
                               >
                                 <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                 </svg>
-                                View on Blockchain
+                                Просмотр в блокчейне
                               </a>
                             )}
                           </div>
@@ -214,7 +214,7 @@ export default function WalletPortal() {
                               <button
                                 onClick={() => handleCopyHash(diploma.batch.txHash)}
                                 className="text-xs bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded border flex items-center flex-shrink-0"
-                                title="Copy transaction hash"
+                                title="Копировать хеш транзакции"
                               >
                                 {copiedHash === diploma.batch.txHash ? (
                                   <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -231,7 +231,7 @@ export default function WalletPortal() {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-xs text-green-600 hover:text-green-800 flex items-center flex-shrink-0"
-                                title="Open in new tab"
+                                title="Открыть в новой вкладке"
                               >
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -249,7 +249,7 @@ export default function WalletPortal() {
                             disabled={accepting === diploma._id}
                             className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-blue-300 disabled:cursor-not-allowed transition-colors"
                           >
-                            {accepting === diploma._id ? "Accepting..." : "Accept Diploma"}
+                            {accepting === diploma._id ? "Принятие..." : "Принять диплом"}
                           </button>
                         </div>
                       )}
@@ -272,15 +272,15 @@ export default function WalletPortal() {
               </div>
               <div className="ml-3">
                 <h3 className="text-sm font-medium text-blue-800">
-                  How to use the Wallet Portal
+                  Как использовать портал кошелька
                 </h3>
                 <div className="mt-2 text-sm text-blue-700">
                   <ol className="list-decimal list-inside space-y-1">
-                    <li>Select a user from the dropdown above</li>
-                    <li>View all diplomas issued to that user</li>
-                    <li>Accept pending diplomas to enable blockchain anchoring</li>
-                    <li>Once accepted, diplomas will be included in the next batch anchoring cycle</li>
-                    <li>After anchoring, you can verify diplomas on the blockchain</li>
+                    <li>Выберите пользователя из выпадающего списка выше</li>
+                    <li>Просмотрите все дипломы, выданные этому пользователю</li>
+                    <li>Примите ожидающие дипломы для включения закрепления в блокчейне</li>
+                    <li>После принятия дипломы будут включены в следующий цикл закрепления пакета</li>
+                    <li>После закрепления вы можете проверить дипломы в блокчейне</li>
                   </ol>
                 </div>
               </div>

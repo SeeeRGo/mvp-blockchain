@@ -34,7 +34,7 @@ export default function VerifyDiploma() {
 
     try {
       if (!searchQuery.trim()) {
-        setError("Please enter a diploma ID or hash");
+        setError("Пожалуйста, введите ID или хеш диплома");
         setIsSearching(false);
         return;
       }
@@ -45,10 +45,10 @@ export default function VerifyDiploma() {
       if (diploma) {
         setSearchResult(diploma);
       } else {
-        setError("Diploma not found. Please check the ID or hash and try again. Make sure you're using the exact value shown after upload.");
+        setError("Диплом не найден. Проверьте ID или хеш и попробуйте снова. Убедитесь, что используете точное значение, показанное после загрузки.");
       }
     } catch (err) {
-      setError("Failed to search for diploma. Please try again.");
+      setError("Не удалось найти диплом. Попробуйте снова.");
       console.error(err);
     } finally {
       setIsSearching(false);
@@ -68,7 +68,7 @@ export default function VerifyDiploma() {
         verificationResult,
       });
     } catch (err) {
-      setError("Failed to verify diploma on blockchain. Please try again.");
+      setError("Не удалось проверить диплом в блокчейне. Попробуйте снова.");
       console.error(err);
     }
   };
@@ -79,7 +79,7 @@ export default function VerifyDiploma() {
       setCopiedHash(hash);
       setTimeout(() => setCopiedHash(null), 2000);
     } catch (err) {
-      console.error("Failed to copy hash:", err);
+      console.error("Не удалось скопировать хеш:", err);
     }
   };
 
@@ -88,7 +88,7 @@ export default function VerifyDiploma() {
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <Link href="/" className="text-green-600 hover:text-green-800 font-medium">
-            ← Back to Home
+            ← Вернуться на главную
           </Link>
         </div>
       </header>
@@ -98,9 +98,9 @@ export default function VerifyDiploma() {
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <span className="text-4xl">✅</span>
           </div>
-          <h2 className="text-4xl font-bold text-gray-900 mb-2">Verify Diploma</h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-2">Проверить диплом</h2>
           <p className="text-gray-600 text-lg">
-            Enter the diploma ID or hash to verify its authenticity on the blockchain
+            Введите ID или хеш диплома для проверки его подлинности в блокчейне
           </p>
         </div>
 
@@ -111,7 +111,7 @@ export default function VerifyDiploma() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Enter diploma ID or hash (both work)..."
+              placeholder="Введите ID или хеш диплома (оба работают)..."
               className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-colors"
             />
             <button
@@ -119,7 +119,7 @@ export default function VerifyDiploma() {
               disabled={isSearching}
               className="px-8 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
-              {isSearching ? "Searching..." : "Search"}
+              {isSearching ? "Поиск..." : "Поиск"}
             </button>
           </form>
 
@@ -134,7 +134,7 @@ export default function VerifyDiploma() {
         {searchResult && (
           <div className="bg-white rounded-xl shadow-lg p-8">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-2xl font-bold text-gray-900">Diploma Details</h3>
+              <h3 className="text-2xl font-bold text-gray-900">Детали диплома</h3>
               <StatusBadge status={searchResult.status} />
             </div>
 
@@ -142,55 +142,55 @@ export default function VerifyDiploma() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               <div className="space-y-4">
                 <div>
-                  <label className="text-sm font-medium text-gray-500">Student Name</label>
-                  <p className="text-lg font-semibold text-gray-900">{searchResult.data?.studentName || "N/A"}</p>
+                  <label className="text-sm font-medium text-gray-500">Имя студента</label>
+                  <p className="text-lg font-semibold text-gray-900">{searchResult.data?.studentName || "Н/Д"}</p>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-500">Degree</label>
-                  <p className="text-lg font-semibold text-gray-900">{searchResult.data?.degree || "N/A"}</p>
+                  <label className="text-sm font-medium text-gray-500">Степень</label>
+                  <p className="text-lg font-semibold text-gray-900">{searchResult.data?.degree || "Н/Д"}</p>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-500">Specialty</label>
-                  <p className="text-lg font-semibold text-gray-900">{searchResult.data?.specialty || "N/A"}</p>
+                  <label className="text-sm font-medium text-gray-500">Специальность</label>
+                  <p className="text-lg font-semibold text-gray-900">{searchResult.data?.specialty || "Н/Д"}</p>
                 </div>
               </div>
 
               <div className="space-y-4">
                 <div>
-                  <label className="text-sm font-medium text-gray-500">Issue Date</label>
-                  <p className="text-lg font-semibold text-gray-900">{searchResult.data?.issueDate || "N/A"}</p>
+                  <label className="text-sm font-medium text-gray-500">Дата выдачи</label>
+                  <p className="text-lg font-semibold text-gray-900">{searchResult.data?.issueDate || "Н/Д"}</p>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-500">Graduation Date</label>
-                  <p className="text-lg font-semibold text-gray-900">{searchResult.data?.graduationDate || "N/A"}</p>
+                  <label className="text-sm font-medium text-gray-500">Дата окончания</label>
+                  <p className="text-lg font-semibold text-gray-900">{searchResult.data?.graduationDate || "Н/Д"}</p>
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-gray-500">Diploma Number</label>
-                  <p className="text-lg font-semibold text-gray-900">{searchResult.data?.diplomaNumber || "N/A"}</p>
+                  <label className="text-sm font-medium text-gray-500">Номер диплома</label>
+                  <p className="text-lg font-semibold text-gray-900">{searchResult.data?.diplomaNumber || "Н/Д"}</p>
                 </div>
               </div>
             </div>
 
             {/* Blockchain Information */}
             <div className="bg-gray-50 rounded-lg p-6 mb-6">
-              <h4 className="text-lg font-semibold text-gray-900 mb-4">Blockchain Information</h4>
+              <h4 className="text-lg font-semibold text-gray-900 mb-4">Информация о блокчейне</h4>
               <div className="space-y-3">
                 <div className="flex justify-between items-start">
-                  <span className="text-sm text-gray-600">Diploma Hash:</span>
+                  <span className="text-sm text-gray-600">Хеш диплома:</span>
                   <code className="text-sm bg-white px-3 py-1 rounded border break-all max-w-xs">{searchResult.diplomaHash}</code>
                 </div>
                 <div className="flex justify-between items-start">
-                  <span className="text-sm text-gray-600">Diploma ID:</span>
+                  <span className="text-sm text-gray-600">ID диплома:</span>
                   <code className="text-sm bg-white px-3 py-1 rounded border break-all max-w-xs">{searchResult._id}</code>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Status:</span>
+                  <span className="text-sm text-gray-600">Статус:</span>
                   <StatusBadge status={searchResult.status} />
                 </div>
                 {diplomaWithBatch?.batch?.txHash && (
                   <div className="flex flex-col gap-2">
                     <div className="flex justify-between items-start">
-                      <span className="text-sm text-gray-600">Transaction Hash:</span>
+                      <span className="text-sm text-gray-600">Хеш транзакции:</span>
                       <div className="flex items-center gap-2 flex-1 justify-end">
                         <code className="text-sm bg-white px-3 py-1 rounded border break-all max-w-xs">
                           {diplomaWithBatch.batch.txHash}
@@ -198,7 +198,7 @@ export default function VerifyDiploma() {
                         <button
                           onClick={() => diplomaWithBatch.batch?.txHash && handleCopyHash(diplomaWithBatch.batch.txHash)}
                           className="text-sm bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded border flex items-center"
-                          title="Copy transaction hash"
+                          title="Копировать хеш транзакции"
                         >
                           {copiedHash === diplomaWithBatch.batch?.txHash ? (
                             <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -213,7 +213,7 @@ export default function VerifyDiploma() {
                       </div>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-gray-600">View on Arbiscan:</span>
+                      <span className="text-sm text-gray-600">Просмотр на Arbiscan:</span>
                       <a
                         href={`https://sepolia.arbiscan.io/tx/${diplomaWithBatch.batch.txHash}`}
                         target="_blank"
@@ -223,14 +223,14 @@ export default function VerifyDiploma() {
                         <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                         </svg>
-                        Open in New Tab
+                        Открыть в новой вкладке
                       </a>
                     </div>
                   </div>
                 )}
                 {searchResult.batchId && (
                   <div className="flex justify-between items-center">
-                    <span className="text-sm text-gray-600">Batch ID:</span>
+                    <span className="text-sm text-gray-600">ID пакета:</span>
                     <code className="text-sm bg-white px-3 py-1 rounded border">{searchResult.batchId}</code>
                   </div>
                 )}
@@ -245,12 +245,12 @@ export default function VerifyDiploma() {
                     {searchResult.verificationResult.verified ? "✅" : "❌"}
                   </span>
                   <h4 className="text-lg font-semibold text-gray-900">
-                    {searchResult.verificationResult.verified ? "Verified on Blockchain" : "Verification Failed"}
+                    {searchResult.verificationResult.verified ? "Проверено в блокчейне" : "Верификация не удалась"}
                   </h4>
                 </div>
                 {searchResult.verificationResult.txHash && (
                   <p className="text-sm text-gray-700">
-                    Transaction Hash:{" "}
+                    Хеш транзакции:{" "}
                     <code className="bg-white px-2 py-1 rounded border">{searchResult.verificationResult.txHash}</code>
                   </p>
                 )}
@@ -264,14 +264,14 @@ export default function VerifyDiploma() {
                   onClick={handleVerifyOnChain}
                   className="flex-1 px-4 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
                 >
-                  Verify on Blockchain
+                  Проверить в блокчейне
                 </button>
               )}
               <Link
                 href="/"
                 className="flex-1 px-4 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition-colors text-center"
               >
-                Back to Home
+                Вернуться на главную
               </Link>
             </div>
           </div>
@@ -280,20 +280,20 @@ export default function VerifyDiploma() {
         {/* Instructions */}
         {!searchResult && (
           <div className="bg-white rounded-xl shadow-lg p-8">
-            <h3 className="text-xl font-bold text-gray-900 mb-4">How to Verify a Diploma</h3>
+            <h3 className="text-xl font-bold text-gray-900 mb-4">Как проверить диплом</h3>
             <ol className="list-decimal list-inside space-y-3 text-gray-600">
-              <li>Obtain the diploma ID or hash from the diploma document or issuer</li>
-              <li>Enter the ID or hash in the search field above (both work!)</li>
-              <li>Click "Search" to retrieve the diploma details</li>
-              <li>Review the diploma information to ensure it matches</li>
-              <li>If the diploma is anchored, click "Verify on Blockchain" to confirm authenticity</li>
+              <li>Получите ID или хеш диплома из документа диплома или у издателя</li>
+              <li>Введите ID или хеш в поле поиска выше (оба работают!)</li>
+              <li>Нажмите "Поиск" для получения деталей диплома</li>
+              <li>Проверьте информацию о дипломе, чтобы убедиться в совпадении</li>
+              <li>Если диплом закреплен, нажмите "Проверить в блокчейне" для подтверждения подлинности</li>
             </ol>
 
             <div className="mt-6 p-4 bg-blue-50 border-l-4 border-blue-400">
               <p className="text-sm text-blue-800">
-                <strong>Note:</strong> You can search using either the Diploma ID (shown after upload) or the Diploma Hash.
-                Only diplomas that have been anchored to the blockchain can be verified on-chain.
-                Diplomas with status "pending" or "accepted" are waiting to be included in the next batch.
+                <strong>Примечание:</strong> Вы можете искать, используя ID диплома (показанный после загрузки) или хеш диплома.
+                Только дипломы, закрепленные в блокчейне, могут быть проверены в блокчейне.
+                Дипломы со статусом "ожидает" или "принят" ожидают включения в следующий пакет.
               </p>
             </div>
           </div>
@@ -306,9 +306,9 @@ export default function VerifyDiploma() {
 // Status Badge Component
 function StatusBadge({ status }: { status: string }) {
   const statusConfig = {
-    pending: { color: "bg-yellow-100 text-yellow-800", text: "Pending" },
-    accepted: { color: "bg-blue-100 text-blue-800", text: "Accepted" },
-    anchored: { color: "bg-green-100 text-green-800", text: "Anchored" },
+    pending: { color: "bg-yellow-100 text-yellow-800", text: "Ожидает" },
+    accepted: { color: "bg-blue-100 text-blue-800", text: "Принят" },
+    anchored: { color: "bg-green-100 text-green-800", text: "Закреплен" },
   };
 
   const config = statusConfig[status as keyof typeof statusConfig] || statusConfig.pending;

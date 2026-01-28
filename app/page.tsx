@@ -20,31 +20,31 @@ export default function Home() {
                 href="/upload"
                 className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
               >
-                Upload Diploma
+                Загрузить диплом
               </Link>
               <Link
                 href="/verify"
                 className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
               >
-                Verify Diploma
+                Проверить диплом
               </Link>
               <Link
                 href="/university"
                 className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
               >
-                University Portal
+                Портал университета
               </Link>
               <Link
                 href="/wallet"
                 className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
               >
-                Wallet Portal
+                Портал кошелька
               </Link>
               <Link
                 href="/verifier"
                 className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 transition-colors"
               >
-                Verifier Portal
+                Портал верификатора
               </Link>
             </nav>
           </div>
@@ -55,11 +55,11 @@ export default function Home() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center">
           <h2 className="text-5xl font-bold text-gray-900 mb-6">
-            Secure Diploma Verification on Blockchain
+            Безопасная верификация дипломов на блокчейне
           </h2>
           <p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto">
-            Issue, verify, and manage academic diplomas with the security and transparency of blockchain technology.
-            Prevent fraud and ensure authenticity with immutable records.
+            Выпускайте, проверяйте и управляйте академическими дипломами с безопасностью и прозрачностью блокчейн-технологий.
+            Предотвращайте мошенничество и обеспечивайте подлинность с неизменяемыми записями.
           </p>
 
           {/* Action Cards */}
@@ -69,9 +69,9 @@ export default function Home() {
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-3xl">📤</span>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Upload Diploma</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">Загрузить диплом</h3>
                 <p className="text-gray-600">
-                  Issue a new diploma and anchor it to the blockchain for permanent, tamper-proof storage.
+                  Выпустите новый диплом и закрепите его на блокчейне для постоянного, защищенного от подделки хранения.
                 </p>
               </div>
             </Link>
@@ -81,9 +81,9 @@ export default function Home() {
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-3xl">✅</span>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Verify Diploma</h3>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">Проверить диплом</h3>
                 <p className="text-gray-600">
-                  Verify the authenticity of any diploma by checking its hash against the blockchain.
+                  Проверьте подлинность любого диплома, сверив его хеш с блокчейном.
                 </p>
               </div>
             </Link>
@@ -91,15 +91,15 @@ export default function Home() {
 
           {/* Features Section */}
           <div className="mt-20">
-            <h3 className="text-3xl font-bold text-gray-900 mb-8">How It Works</h3>
+            <h3 className="text-3xl font-bold text-gray-900 mb-8">Как это работает</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-white rounded-lg p-6 shadow-md">
                 <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-white text-xl font-bold">1</span>
                 </div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">University Issues Diploma</h4>
+                <h4 className="text-lg font-semibold text-gray-900 mb-2">Университет выдает диплом</h4>
                 <p className="text-gray-600 text-sm">
-                  Universities create and issue digital diplomas with unique cryptographic hashes.
+                  Университеты создают и выдают цифровые дипломы с уникальными криптографическими хешами.
                 </p>
               </div>
 
@@ -107,9 +107,9 @@ export default function Home() {
                 <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-white text-xl font-bold">2</span>
                 </div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">Anchored to Blockchain</h4>
+                <h4 className="text-lg font-semibold text-gray-900 mb-2">Закрепление на блокчейне</h4>
                 <p className="text-gray-600 text-sm">
-                  Diplomas are batched and anchored to the Arbitrum blockchain using Merkle trees.
+                  Дипломы группируются и закрепляются на блокчейне Arbitrum с использованием деревьев Меркла.
                 </p>
               </div>
 
@@ -117,9 +117,9 @@ export default function Home() {
                 <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-white text-xl font-bold">3</span>
                 </div>
-                <h4 className="text-lg font-semibold text-gray-900 mb-2">Instant Verification</h4>
+                <h4 className="text-lg font-semibold text-gray-900 mb-2">Мгновенная верификация</h4>
                 <p className="text-gray-600 text-sm">
-                  Anyone can verify diploma authenticity instantly using the blockchain record.
+                  Любой может мгновенно проверить подлинность диплома, используя запись в блокчейне.
                 </p>
               </div>
             </div>
@@ -131,7 +131,7 @@ export default function Home() {
       <footer className="bg-white border-t mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <p className="text-center text-gray-500 text-sm">
-            © 2024 DiplomaChain. Built with Next.js, Convex, and Arbitrum.
+            © 2024 DiplomaChain. Создано с использованием Next.js, Convex и Arbitrum.
           </p>
         </div>
       </footer>

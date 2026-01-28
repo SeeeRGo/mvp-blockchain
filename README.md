@@ -1,332 +1,332 @@
-# MVP Blockchain Diploma Verification System
+# MVP Система верификации дипломов на блокчейне
 
-A blockchain-based diploma verification system that enables universities to issue digital diplomas, owners to store them in a mobile wallet, and verifiers to request and verify diplomas with selective disclosure, all anchored to an L2 blockchain network without exposing personal data on-chain.
+Система верификации дипломов на основе блокчейна, которая позволяет университетам выдавать цифровые дипломы, владельцам хранить их в мобильном кошельке, а верификаторам запрашивать и проверять дипломы с выборочным раскрытием информации, все закреплено в сети L2 блокчейна без раскрытия личных данных в блокчейне.
 
-## Tech Stack
+## Технологический стек
 
-- **Frontend**: Next.js 16 with React 19 and Tailwind CSS 4
-- **Backend**: Convex (real-time database, serverless functions, auth)
-- **Blockchain**: Ethereum L2 (Arbitrum) with Solidity smart contracts
-- **Mobile**: React Native with Expo (planned)
-- **Development**: Hardhat for smart contract development
+- **Frontend**: Next.js 16 с React 19 и Tailwind CSS 4
+- **Backend**: Convex (база данных в реальном времени, бессерверные функции, аутентификация)
+- **Blockchain**: Ethereum L2 (Arbitrum) со смарт-контрактами на Solidity
+- **Mobile**: React Native с Expo (в планах)
+- **Development**: Hardhat для разработки смарт-контрактов
 
-## Project Structure
+## Структура проекта
 
 ```
 mvp-blockchain/
-├── app/                      # Next.js app directory
+├── app/                      # Каталог приложения Next.js
 │   ├── layout.tsx
 │   ├── page.tsx
 │   └── globals.css
-├── convex/                    # Convex backend
-│   ├── schema.ts              # Database schema
-│   ├── convex.config.ts        # Convex configuration
-│   ├── universities.ts         # University portal functions
-│   ├── wallet.ts              # Wallet functions
-│   ├── verifiers.ts           # Verifier portal functions
-│   ├── blockchain.ts          # Blockchain integration
-│   ├── batches.ts            # Batch management
-│   ├── diplomas.ts           # Diploma queries
-│   ├── batchItems.ts          # Batch item management
-│   └── cron.ts              # Scheduled tasks
-├── contracts/                 # Smart contracts
-│   ├── PublisherRegistry.sol   # University attestation contract
-│   └── BatchAnchor.sol        # Batch anchoring contract
-├── scripts/                   # Deployment scripts
-│   └── deploy.js             # Contract deployment
-├── hardhat.config.js          # Hardhat configuration
-├── plans/                    # Documentation
+├── convex/                    # Backend Convex
+│   ├── schema.ts              # Схема базы данных
+│   ├── convex.config.ts        # Конфигурация Convex
+│   ├── universities.ts         # Функции портала университета
+│   ├── wallet.ts              # Функции кошелька
+│   ├── verifiers.ts           # Функции портала верификатора
+│   ├── blockchain.ts          # Интеграция с блокчейном
+│   ├── batches.ts            # Управление пакетами
+│   ├── diplomas.ts           # Запросы дипломов
+│   ├── batchItems.ts          # Управление элементами пакетов
+│   └── cron.ts              # Запланированные задачи
+├── contracts/                 # Смарт-контракты
+│   ├── PublisherRegistry.sol   # Контракт аттестации университета
+│   └── BatchAnchor.sol        # Контракт закрепления пакетов
+├── scripts/                   # Скрипты развертывания
+│   └── deploy.js             # Развертывание контрактов
+├── hardhat.config.js          # Конфигурация Hardhat
+├── plans/                    # Документация
 │   └── mvp-implementation-plan.md
 └── package.json
 ```
 
-## Features Implemented
+## Реализованные функции
 
 ### Backend (Convex)
 
-#### Database Schema
-- **universities**: Publisher (university) information with attestation status
-- **diplomas**: Diploma records with status tracking
-- **users**: Wallet owner accounts
-- **verifiers**: Verifier accounts
-- **verificationRequests**: Verification request tracking
-- **batches**: Batch anchoring records
-- **batchItems**: Merkle tree items for diplomas
+#### Схема базы данных
+- **universities**: Информация об издателях (университетах) со статусом аттестации
+- **diplomas**: Записи дипломов с отслеживанием статуса
+- **users**: Аккаунты владельцев кошельков
+- **verifiers**: Аккаунты верификаторов
+- **verificationRequests**: Отслеживание запросов на верификацию
+- **batches**: Записи закрепления пакетов
+- **batchItems**: Элементы дерева Меркла для дипломов
 
-#### Convex Functions
+#### Функции Convex
 
-**Universities Module** ([`convex/universities.ts`](convex/universities.ts))
-- `getProfile` - Get university profile
-- `listDiplomas` - List issued diplomas
-- `getDiploma` - Get diploma details
-- `getDiplomaStatus` - Get anchoring status
-- `getStats` - Get university statistics
-- `register` - Register new university
-- `attestPublisher` - Initiate publisher attestation
-- `updateAttestation` - Update attestation with transaction hash
-- `createDiploma` - Create new diploma with hash
-- `sendInvitation` - Send invitation to owner
+**Модуль университетов** ([`convex/universities.ts`](convex/universities.ts))
+- `getProfile` - Получить профиль университета
+- `listDiplomas` - Список выданных дипломов
+- `getDiploma` - Получить детали диплома
+- `getDiplomaStatus` - Получить статус закрепления
+- `getStats` - Получить статистику университета
+- `register` - Зарегистрировать новый университет
+- `attestPublisher` - Инициировать аттестацию издателя
+- `updateAttestation` - Обновить аттестацию с хешем транзакции
+- `createDiploma` - Создать новый диплом с хешем
+- `sendInvitation` - Отправить приглашение владельцу
 
-**Wallet Module** ([`convex/wallet.ts`](convex/wallet.ts))
-- `listDiplomas` - List owned diplomas
-- `getDiploma` - Get diploma details
-- `acceptDiploma` - Accept diploma invitation
-- `listVerificationRequests` - List pending verification requests
-- `approveSharing` - Approve sharing with selective disclosure
-- `rejectSharing` - Reject sharing request
-- `registerUser` - Register wallet owner
-- `updateUserDeviceToken` - Update push notification token
+**Модуль кошелька** ([`convex/wallet.ts`](convex/wallet.ts))
+- `listDiplomas` - Список принадлежащих дипломов
+- `getDiploma` - Получить детали диплома
+- `acceptDiploma` - Принять приглашение на диплом
+- `listVerificationRequests` - Список ожидающих запросов на верификацию
+- `approveSharing` - Одобрить предоставление с выборочным раскрытием
+- `rejectSharing` - Отклонить запрос на предоставление
+- `registerUser` - Зарегистрировать владельца кошелька
+- `updateUserDeviceToken` - Обновить токен push-уведомлений
 
-**Verifiers Module** ([`convex/verifiers.ts`](convex/verifiers.ts))
-- `createVerificationRequest` - Create verification request
-- `getVerificationResult` - Get verification result
-- `getOnChainProof` - Get on-chain proof
-- `listVerificationRequests` - List verification requests
-- `registerVerifier` - Register verifier
+**Модуль верификаторов** ([`convex/verifiers.ts`](convex/verifiers.ts))
+- `createVerificationRequest` - Создать запрос на верификацию
+- `getVerificationResult` - Получить результат верификации
+- `getOnChainProof` - Получить доказательство в блокчейне
+- `listVerificationRequests` - Список запросов на верификацию
+- `registerVerifier` - Зарегистрировать верификатора
 
-**Blockchain Module** ([`convex/blockchain.ts`](convex/blockchain.ts))
-- `attestPublisherOnChain` - Attest publisher on Arbitrum
-- `createBatchAnchor` - Create and anchor batch
-- `verifyDiplomaOnChain` - Verify diploma on-chain
-- `buildMerkleTree` - Build Merkle tree from hashes
-- `anchorBatch` - Anchor batch to blockchain
-- `verifyOnChain` - Verify on-chain
+**Модуль блокчейна** ([`convex/blockchain.ts`](convex/blockchain.ts))
+- `attestPublisherOnChain` - Аттестовать издателя в Arbitrum
+- `createBatchAnchor` - Создать и закрепить пакет
+- `verifyDiplomaOnChain` - Проверить диплом в блокчейне
+- `buildMerkleTree` - Построить дерево Меркла из хешей
+- `anchorBatch` - Закрепить пакет в блокчейне
+- `verifyOnChain` - Проверить в блокчейне
 
-**Batches Module** ([`convex/batches.ts`](convex/batches.ts))
-- `create` - Create batch record
-- `updateStatus` - Update batch status
-- `getBatchStatus` - Get batch status
-- `listBatches` - List batches for university
+**Модуль пакетов** ([`convex/batches.ts`](convex/batches.ts))
+- `create` - Создать запись пакета
+- `updateStatus` - Обновить статус пакета
+- `getBatchStatus` - Получить статус пакета
+- `listBatches` - Список пакетов для университета
 
-**Diplomas Module** ([`convex/diplomas.ts`](convex/diplomas.ts))
-- `getPendingForBatch` - Get diplomas pending anchoring
-- `updateStatus` - Update diploma status
-- `getDiplomaByHash` - Get diploma by hash
+**Модуль дипломов** ([`convex/diplomas.ts`](convex/diplomas.ts))
+- `getPendingForBatch` - Получить дипломы, ожидающие закрепления
+- `updateStatus` - Обновить статус диплома
+- `getDiplomaByHash` - Получить диплом по хешу
 
-**Batch Items Module** ([`convex/batchItems.ts`](convex/batchItems.ts))
-- `create` - Create batch item with Merkle proof
+**Модуль элементов пакетов** ([`convex/batchItems.ts`](convex/batchItems.ts))
+- `create` - Создать элемент пакета с доказательством Меркла
 
-**Cron Module** ([`convex/cron.ts`](convex/cron.ts))
-- `anchorPendingBatches` - Anchor pending batches
-- `scheduleBatchAnchoring` - Schedule hourly anchoring
+**Модуль Cron** ([`convex/cron.ts`](convex/cron.ts))
+- `anchorPendingBatches` - Закрепить ожидающие пакеты
+- `scheduleBatchAnchoring` - Запланировать почасовое закрепление
 
-### Smart Contracts
+### Смарт-контракты
 
 #### PublisherRegistry ([`contracts/PublisherRegistry.sol`](contracts/PublisherRegistry.sol))
-- Attest university publishers on-chain
-- Store publisher information
-- Verify publisher attestation status
-- Admin-only functions for management
+- Аттестовать издателей университетов в блокчейне
+- Хранить информацию об издателях
+- Проверять статус аттестации издателя
+- Функции только для администратора для управления
 
-**Key Functions:**
-- `attestPublisher(address, string)` - Attest new publisher
-- `isPublisherAttested(address)` - Check attestation status
-- `getPublisherInfo(address)` - Get publisher details
-- `transferAdmin(address)` - Transfer admin rights
+**Ключевые функции:**
+- `attestPublisher(address, string)` - Аттестовать нового издателя
+- `isPublisherAttested(address)` - Проверить статус аттестации
+- `getPublisherInfo(address)` - Получить детали издателя
+- `transferAdmin(address)` - Передать права администратора
 
 #### BatchAnchor ([`contracts/BatchAnchor.sol`](contracts/BatchAnchor.sol))
-- Anchor batches of diploma hashes using Merkle trees
-- Verify diplomas using Merkle proofs
-- Track batches by publisher
+- Закреплять пакеты хешей дипломов с использованием деревьев Меркла
+- Проверять дипломы с использованием доказательств Меркла
+- Отслеживать пакеты по издателям
 
-**Key Functions:**
-- `anchorBatch(bytes32, bytes32, uint256)` - Anchor batch
-- `getBatch(bytes32)` - Get batch information
-- `verifyDiploma(bytes32, bytes32, bytes32[])` - Verify diploma
-- `getPublisherBatches(address)` - Get publisher batches
+**Ключевые функции:**
+- `anchorBatch(bytes32, bytes32, uint256)` - Закрепить пакет
+- `getBatch(bytes32)` - Получить информацию о пакете
+- `verifyDiploma(bytes32, bytes32, bytes32[])` - Проверить диплом
+- `getPublisherBatches(address)` - Получить пакеты издателя
 
-## Getting Started
+## Начало работы
 
-### Prerequisites
+### Предварительные требования
 
-- Node.js 20.9.0 or higher
-- npm or yarn
-- Convex account (free at [convex.dev](https://convex.dev))
-- Ethereum wallet with testnet ETH for deployment
+- Node.js 20.9.0 или выше
+- npm или yarn
+- Аккаунт Convex (бесплатно на [convex.dev](https://convex.dev))
+- Ethereum кошелек с testnet ETH для развертывания
 
-### Installation
+### Установка
 
 ```bash
-# Install dependencies
+# Установить зависимости
 npm install
 
-# Install Convex CLI (requires Node 20+)
+# Установить Convex CLI (требуется Node 20+)
 npm install -g convex
 ```
 
-### Convex Setup
+### Настройка Convex
 
 ```bash
-# Login to Convex
+# Войти в Convex
 npx convex login
 
-# Initialize Convex (if not already done)
+# Инициализировать Convex (если еще не сделано)
 npx convex init
 
-# Deploy schema
+# Развернуть схему
 npx convex deploy
 ```
 
-### Environment Variables Setup
+### Настройка переменных окружения
 
-**Important**: Convex server functions require environment variables to be set in the Convex deployment environment, not just in `.env.local`.
+**Важно**: Функции сервера Convex требуют установки переменных окружения в среде развертывания Convex, а не только в `.env.local`.
 
-#### Quick Setup
+#### Быстрая настройка
 
-Run the automated setup script:
+Запустите автоматизированный скрипт настройки:
 
 ```bash
 npm run setup:convex
 ```
 
-Or manually set the required variables:
+Или вручную установите необходимые переменные:
 
 ```bash
-# Set PRIVATE_KEY
+# Установить PRIVATE_KEY
 npx convex env set PRIVATE_KEY "your_private_key_here"
 
-# Set ARBITRUM_SEPOLIA_RPC_URL
+# Установить ARBITRUM_SEPOLIA_RPC_URL
 npx convex env set ARBITRUM_SEPOLIA_RPC_URL "https://sepolia-rollup.arbitrum.io/rpc"
 
-# Set ARBISCAN_API_KEY (optional)
+# Установить ARBISCAN_API_KEY (опционально)
 npx convex env set ARBISCAN_API_KEY "your_arbiscan_api_key"
 ```
 
-#### Troubleshooting Environment Variables
+#### Устранение неполадок с переменными окружения
 
-If you encounter the error `Missing ARBITRUM_SEPOLIA_RPC_URL or PRIVATE_KEY environment variables`:
+Если вы столкнулись с ошибкой `Missing ARBITRUM_SEPOLIA_RPC_URL or PRIVATE_KEY environment variables`:
 
-1. **Verify variables are set in Convex**:
-   ```bash
-   npx convex env list
-   ```
+1. **Проверьте, что переменные установлены в Convex**:
+    ```bash
+    npx convex env list
+    ```
 
-2. **Set missing variables** using the commands above
+2. **Установите отсутствующие переменные**, используя команды выше
 
-3. **Restart Convex dev server**:
-   ```bash
-   # Stop the current server (Ctrl+C)
-   npx convex dev
-   ```
+3. **Перезапустите сервер разработки Convex**:
+    ```bash
+    # Остановите текущий сервер (Ctrl+C)
+    npx convex dev
+    ```
 
-4. **Check Convex dashboard**:
-   - Go to https://dashboard.convex.dev
-   - Navigate to Settings → Environment Variables
-   - Verify all required variables are present
+4. **Проверьте панель Convex**:
+    - Перейдите на https://dashboard.convex.dev
+    - Перейдите в Settings → Environment Variables
+    - Убедитесь, что все необходимые переменные присутствуют
 
-For detailed troubleshooting, see [`ENV_FIX_GUIDE.md`](ENV_FIX_GUIDE.md).
+Для подробного устранения неполадок см. [`ENV_FIX_GUIDE.md`](ENV_FIX_GUIDE.md).
 
-### Smart Contract Deployment
+### Развертывание смарт-контрактов
 
 ```bash
-# Install Hardhat dependencies
+# Установить зависимости Hardhat
 npm install --save-dev hardhat @nomicfoundation/hardhat-toolbox @nomicfoundation/hardhat-verify dotenv
 
-# Create .env file
+# Создать файл .env
 echo "PRIVATE_KEY=your_private_key" > .env
 echo "ARBITRUM_SEPOLIA_RPC_URL=https://sepolia-rollup.arbitrum.io/rpc" >> .env
 echo "ARBISCAN_API_KEY=your_arbiscan_api_key" >> .env
 
-# Compile contracts
+# Скомпилировать контракты
 npx hardhat compile
 
-# Deploy to Arbitrum Sepolia (testnet)
+# Развернуть в Arbitrum Sepolia (testnet)
 npx hardhat run scripts/deploy.js --network arbitrumSepolia
 
-# Deploy to Arbitrum One (mainnet)
+# Развернуть в Arbitrum One (mainnet)
 npx hardhat run scripts/deploy.js --network arbitrum
 ```
 
-### Development
+### Разработка
 
 ```bash
-# Start Next.js development server
+# Запустить сервер разработки Next.js
 npm run dev
 
-# Start Convex dev server (in another terminal)
+# Запустить сервер разработки Convex (в другом терминале)
 npx convex dev
 ```
 
-## Architecture
+## Архитектура
 
-### Data Flow
+### Поток данных
 
-1. **University Registration**: University registers → Publisher key generated → Attestation on-chain
-2. **Diploma Issuance**: University creates diploma → Hash calculated → Stored off-chain → Invitation sent
-3. **Diploma Acceptance**: Owner receives invitation → Accepts diploma → Status updated
-4. **Batch Anchoring**: Cron job collects accepted diplomas → Merkle tree built → Batch anchored on-chain
-5. **Verification Request**: Verifier creates request → Owner notified → Owner approves sharing
-6. **Verification**: Verifier receives shared data → On-chain verification → Proof displayed
+1. **Регистрация университета**: Университет регистрируется → Генерируется ключ издателя → Аттестация в блокчейне
+2. **Выдача диплома**: Университет создает диплом → Вычисляется хеш → Сохраняется офлайн → Отправляется приглашение
+3. **Принятие диплома**: Владелец получает приглашение → Принимает диплом → Статус обновляется
+4. **Закрепление пакета**: Задача Cron собирает принятые дипломы → Строится дерево Меркла → Пакет закрепляется в блокчейне
+5. **Запрос на верификацию**: Верификатор создает запрос → Владелец уведомляется → Владелец одобряет предоставление
+6. **Верификация**: Верификатор получает предоставленные данные → Проверка в блокчейне → Отображается доказательство
 
-### Privacy Model
+### Модель конфиденциальности
 
-- **Off-chain**: All personal data (PII) stored encrypted in Convex
-- **On-chain**: Only hashes, Merkle roots, and timestamps
-- **Selective Disclosure**: Owner chooses which fields to share
-- **Time-limited Access**: Shared data expires after TTL
+- **Офлайн**: Все личные данные (PII) хранятся зашифрованными в Convex
+- **В блокчейне**: Только хеши, корни Меркла и временные метки
+- **Выборочное раскрытие**: Владелец выбирает, какие поля предоставлять
+- **Ограниченный по времени доступ**: Предоставленные данные истекают после TTL
 
-## MVP Requirements Coverage
+## Покрытие требований MVP
 
-✅ **Week 1-2: Core Flow**
-- Diploma issuance by university
-- Wallet acceptance of diplomas
-- Verification request and sharing with consent
+✅ **Неделя 1-2: Основной поток**
+- Выдача диплома университетом
+- Принятие диплома кошельком
+- Запрос на верификацию и предоставление с согласием
 
-✅ **Week 3: Publisher Attestation**
-- Publisher key generation
-- On-chain attestation
-- Block explorer integration
+✅ **Неделя 3: Аттестация издателя**
+- Генерация ключа издателя
+- Аттестация в блокчейне
+- Интеграция с обозревателем блоков
 
-✅ **Week 4: Batch Anchoring**
-- Merkle tree implementation
-- Batch creation and anchoring
-- Public proof page
+✅ **Неделя 4: Закрепление пакетов**
+- Реализация дерева Меркла
+- Создание и закрепление пакетов
+- Страница публичного доказательства
 
-✅ **Week 5: UX Polish**
-- Status indicators
-- Retry mechanisms
-- Error handling
+✅ **Неделя 5: Полировка UX**
+- Индикаторы статуса
+- Механизмы повтора
+- Обработка ошибок
 
-✅ **Week 6: Testing & Demo**
-- E2E test structure
-- Demo preparation
-- Acceptance criteria
+✅ **Неделя 6: Тестирование и демонстрация**
+- Структура E2E тестов
+- Подготовка демонстрации
+- Критерии приемки
 
-## Next Steps
+## Следующие шаги
 
-### Frontend Development
-- [ ] University Portal UI
-- [ ] Verifier Portal UI
-- [ ] Mobile Wallet (React Native)
+### Разработка Frontend
+- [ ] UI портала университета
+- [ ] UI портала верификатора
+- [ ] Мобильный кошелек (React Native)
 
-### Blockchain Integration
-- [ ] ethers.js integration for Arbitrum
-- [ ] Transaction monitoring
-- [ ] Gas optimization
+### Интеграция с блокчейном
+- [ ] Интеграция ethers.js для Arbitrum
+- [ ] Мониторинг транзакций
+- [ ] Оптимизация газа
 
-### Testing
-- [ ] Unit tests for Convex functions
-- [ ] Smart contract tests
-- [ ] E2E tests with Playwright
+### Тестирование
+- [ ] Модульные тесты для функций Convex
+- [ ] Тесты смарт-контрактов
+- [ ] E2E тесты с Playwright
 
-### Deployment
-- [ ] Convex production deployment
-- [ ] Smart contract deployment to testnet
-- [ ] Vercel deployment
-- [ ] Mobile app deployment
+### Развертывание
+- [ ] Развертывание Convex в продакшн
+- [ ] Развертывание смарт-контрактов в testnet
+- [ ] Развертывание в Vercel
+- [ ] Развертывание мобильного приложения
 
-## Security Considerations
+## Соображения безопасности
 
-- All PII encrypted at rest and in transit
-- No personal data on blockchain
-- Publisher keys stored securely
-- Merkle proofs for verification
-- Selective disclosure with explicit consent
+- Все PII зашифрованы при хранении и передаче
+- Никаких личных данных в блокчейне
+- Ключи издателей хранятся безопасно
+- Доказательства Меркла для верификации
+- Выборочное раскрытие с явным согласием
 
-## License
+## Лицензия
 
 MIT
 
-## Contributing
+## Участие
 
-This is an MVP implementation. Contributions welcome for production-ready features.
+Это MVP реализация. Участие приветствуется для функций, готовых к продакшн.
