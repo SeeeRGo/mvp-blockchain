@@ -28,9 +28,9 @@ export default function UploadDiploma() {
   // Mutation to create diploma
   const createDiploma = useMutation(api.universities.createDiploma);
   
-  // Query to get diploma by ID (to retrieve hash after creation)
+  // Query to get diploma with batch information (to retrieve hash and transaction info after creation)
   // Only call the query when createdDiploma is not null
-  const diploma = useQuery(api.diplomas.getDiplomaById, createdDiploma ? { diplomaId: createdDiploma } : "skip");
+  const diploma = useQuery(api.diplomas.getDiplomaWithBatch, createdDiploma ? { diplomaId: createdDiploma } : "skip");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -106,10 +106,25 @@ export default function UploadDiploma() {
                   <span className="font-medium text-sm text-blue-600">{createdDiploma}</span>
                 </div>
                 {diploma && (
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Хеш диплома:</span>
-                    <span className="font-medium text-sm text-blue-600">{diploma.diplomaHash}</span>
-                  </div>
+                  <>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Хеш диплома:</span>
+                      <span className="font-medium text-sm text-blue-600">{diploma.diplomaHash}</span>
+                    </div>
+                    {diploma.batch && diploma.batch.txHash && (
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-600">Транзакция блокчейна:</span>
+                        <a
+                          href={`https://sepolia.arbiscan.io/tx/${diploma.batch.txHash}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-medium text-sm text-blue-600 hover:text-blue-800 underline"
+                        >
+                          {diploma.batch.txHash.slice(0, 10)}...{diploma.batch.txHash.slice(-8)}
+                        </a>
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             </div>
@@ -122,7 +137,22 @@ export default function UploadDiploma() {
               <ul className="text-sm text-blue-800 list-disc list-inside space-y-1">
                 <li><strong>ID диплома:</strong> {createdDiploma}</li>
                 {diploma && (
-                  <li><strong>Хеш диплома:</strong> {diploma.diplomaHash}</li>
+                  <>
+                    <li><strong>Хеш диплома:</strong> {diploma.diplomaHash}</li>
+                    {diploma.batch && diploma.batch.txHash && (
+                      <li>
+                        <strong>Транзакция блокчейна:</strong>{" "}
+                        <a
+                          href={`https://sepolia.arbiscan.io/tx/${diploma.batch.txHash}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:text-blue-800 underline"
+                        >
+                          {diploma.batch.txHash.slice(0, 10)}...{diploma.batch.txHash.slice(-8)}
+                        </a>
+                      </li>
+                    )}
+                  </>
                 )}
               </ul>
               <p className="text-sm text-blue-800 mt-2">
