@@ -29,7 +29,8 @@ export default function UploadDiploma() {
   const createDiploma = useMutation(api.universities.createDiploma);
   
   // Query to get diploma by ID (to retrieve hash after creation)
-  const diploma = useQuery(api.diplomas.getDiplomaById, { diplomaId: createdDiploma });
+  // Only call the query when createdDiploma is not null
+  const diploma = useQuery(api.diplomas.getDiplomaById, createdDiploma ? { diplomaId: createdDiploma } : "skip");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
